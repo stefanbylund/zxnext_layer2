@@ -1,0 +1,17 @@
+* Switch to zxn target in z88dk when stable.
+
+* Update README.md and zxnext_layer2.h header.
+
+* Add support functions for hardware scrolling?
+
+* Draw/fill circle and ellipse.
+
+* Support blitting a sub-rectangle of the source rectangle?
+
+* Use something else than BANK_SYS_VAR?
+
+* Add support for layer 2 screen front/back buffer feature.
+
+* Improve performance of layer2_blit_transparent() function.
+
+* Fix all FIXMEs.
