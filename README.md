@@ -18,7 +18,8 @@ finally published.
 
 This API has been tested and verified to work with the z88dk C compiler
 (2017-08-18 snapshot) and the ZEsarUX 5.1 (2017-07-24 snapshot) and CSpect 0.6
-emulators.
+emulators. See the "Known Problems" section below for a list of known problems
+and workarounds.
 
 ## Download
 
@@ -48,8 +49,7 @@ suitable place. It contains the files listed in the "Download" section above.
 
 2. Install the latest version of [z88dk](https://github.com/z88dk/z88dk) and
 the [ZEsarUX](https://sourceforge.net/projects/zesarux/) or
-[CSpect](https://dailly.blogspot.se/2017/07/new-cspect-zx-spectrum-next-emulator.html)
-emulator.
+[CSpect](https://dailly.blogspot.se/) emulator.
 
 4. Read about how the layer 2 screen work in the "Layer 2 Screen" section below
 or in the official specification at http://www.specnext.com/FIXME/.
