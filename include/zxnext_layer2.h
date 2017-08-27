@@ -28,7 +28,7 @@
  * modes; standard Spectrum mode (256 * 192 pixels, 32 * 24 attributes, 16
  * colours), Timex high-colour mode (256 * 192 pixels, 32 * 192 attributes, 16
  * colours), Timex high-resolution mode (512 * 192 pixels in 2 colours) and
- * Radastan mode (128 * 96 double-sized pixels in 16 colours).
+ * low-resolution mode (128 * 96 double-sized pixels in 256 colours).
  *
  * The layer 2 screen resides in a dedicated memory that is not directly
  * accessible by the Z80 CPU. In order to manipulate the layer 2 screen, it has
@@ -43,8 +43,6 @@
  * for writing. If you read the paged-in layer 2 screen memory, you will see the
  * Spectrum BASIC ROM and not the layer 2 screen.
  *
- * TODO: Talk about hardware scrolling.
- *
  * This API provides optional functions for drawing on the layer 2 screen or on
  * a layer 2 off-screen buffer (paging in the screen / off-screen sections as
  * necessary).
@@ -53,6 +51,49 @@
  * executed, the stack, the interrupt vector table and isr(s), and any required
  * data cannot be located in the RAM bank at 0xC000, which will be temporarily
  * paged out when drawing on a paged-in layer 2 off-screen buffer.
+ *
+ * Hardware Scrolling
+ * ------------------
+ *
+ * The layer 2 screen supports horizontal and vertical pixel-smooth hardware
+ * scrolling. The scrolling is done by offsetting the screen in the X and/or Y
+ * direction in a wrapping manner. Without any offsetting applied, i.e. with the
+ * X and Y offsets set to 0, the screen is made of up 256 pixel columns in the X
+ * positions [0, 1, ..., 254, 255] and 192 pixel rows in the Y positions
+ * [0, 1, ..., 190, 191]. The screen offsets are easiest described by the
+ * examples below.
+ *
+ * If the X offset is set to 1, the columns of the screen will be reorganised as
+ * [1, 2, ..., 254, 255, 0], setting it to 5 yields [5, 6, ..., 254, 255, 0, 1,
+ * 2, 3, 4], setting it to 254 yields [254, 255, 0, 1, 2, ..., 252, 253],
+ * setting it to 255 yields [255, 0, 1, 2, ..., 253, 254], and setting it back
+ * to 0 yields [0, 1, ..., 254, 255]. Thus, setting the X offset to 1, 2, 3, ...,
+ * 254, 255, 0 will scroll the screen, one pixel at a time, 256 pixels to the
+ * left so it will be back in its original position again. Setting the X offset
+ * to 255, 254, 253, ..., 2, 1, 0 will scroll the screen, one pixel at a time,
+ * 256 pixels to the right so it will be back in its original position again.
+ *
+ * If the Y offset is set to 1, the rows of the screen will be reorganised as
+ * [1, 2, ..., 190, 191, 0], setting it to 5 yields [5, 6, ..., 190, 191, 0, 1,
+ * 2, 3, 4], setting it to 190 yields [190, 191, 0, 1, 2, ..., 188, 189],
+ * setting it to 191 yields [191, 0, 1, 2, ..., 189, 190], and setting it back
+ * to 0 yields [0, 1, ..., 190, 191]. Thus, setting the Y offset to 1, 2, 3, ...,
+ * 190, 191, 0 will scroll the screen, one pixel at a time, 192 pixels upwards
+ * so it will be back in its original position again. Setting the Y offset to
+ * 191, 190, 189, ..., 2, 1, 0 will scroll the screen, one pixel at a time, 192
+ * pixels downwards so it will be back in its original position again.
+ *
+ * To scroll between multiple screens horizontally, you must fill in the column
+ * being scrolled out of the screen with the corresponding column from the
+ * screen to be scrolled in. To scroll between multiple screens vertically, you
+ * must fill in the row being scrolled out of the screen with the corresponding
+ * row from the screen to be scrolled in. When scrolling between multiple
+ * screens, it is convenient to use layer 2 off-screen buffers for the screens
+ * to be scrolled in.
+ *
+ * The zxnext_layer2_demo project contains several scrolling examples that make
+ * it easier to understand how the hardware scrolling of the layer 2 screen is
+ * actually done.
  ******************************************************************************/
 
 #ifndef _ZXNEXT_LAYER2_H
@@ -138,8 +179,8 @@ void layer2_set_ula_transparency_color(uint8_t color);
 uint8_t layer2_get_ula_transparency_color(void);
 
 /*
- * Offset the layer 2 screen horizontally on the X axis in a wrapping manner for
- * the specified amount of pixels (0-255).
+ * Offset the columns of the layer 2 screen horizontally on the X axis in a
+ * wrapping manner for the specified amount of pixels (0-255).
  *
  * Passing in 1 will scroll the screen 1 pixel to the left and the column of
  * pixels being scrolled out on the left side will reappear on the right side.
@@ -158,13 +199,13 @@ uint8_t layer2_get_ula_transparency_color(void);
 void layer2_set_offset_x(uint8_t offset_x);
 
 /*
- * Return the currently set horizontal offset value in pixels (0-255).
+ * Return the currently set X offset value in pixels (0-255).
  */
 uint8_t layer2_get_offset_x(void);
 
 /*
- * Offset the layer 2 screen vertically on the Y axis in a wrapping manner for
- * the specified amount of pixels (0-191).
+ * Offset the rows of the layer 2 screen vertically on the Y axis in a wrapping
+ * manner for the specified amount of pixels (0-191).
  *
  * Passing in 1 will scroll the screen 1 pixel up and the row of pixels being
  * scrolled out will reappear at the bottom.
@@ -181,7 +222,7 @@ uint8_t layer2_get_offset_x(void);
 void layer2_set_offset_y(uint8_t offset_y);
 
 /*
- * Return the currently set vertical offset value in pixels (0-191).
+ * Return the currently set Y offset value in pixels (0-191).
  */
 uint8_t layer2_get_offset_y(void);
 
@@ -304,6 +345,8 @@ void layer2_blit(uint8_t x,
  *
  * Transparent pixels (i.e. pixels with the color 0xE3) in the source rectangle
  * are skipped.
+ *
+ * This blit function is useful for implementing software sprites.
  *
  * Note: In order to handle transparency, this function blits at pixel level
  * while layer2_blit() blits at line level; consequently

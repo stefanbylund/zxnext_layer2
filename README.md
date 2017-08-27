@@ -137,7 +137,7 @@ Sidenote: The ULA screen in Sinclair ZX Spectrum Next supports four graphics
 modes; standard Spectrum mode (256 * 192 pixels, 32 * 24 attributes, 16
 colours), Timex high-colour mode (256 * 192 pixels, 32 * 192 attributes, 16
 colours), Timex high-resolution mode (512 * 192 pixels in 2 colours) and
-Radastan mode (128 * 96 double-sized pixels in 16 colours).
+low-resolution mode (128 * 96 double-sized pixels in 256 colours).
 
 The layer 2 screen resides in a dedicated memory that is not directly
 accessible by the Z80 CPU. In order to manipulate the layer 2 screen, it has
@@ -152,8 +152,6 @@ Note: The layer 2 screen is paged-in in a special way and is only accessible
 for writing. If you read the paged-in layer 2 screen memory, you will see the
 Spectrum BASIC ROM and not the layer 2 screen.
 
-TODO: Talk about hardware scrolling.
-
 This API provides optional functions for drawing on the layer 2 screen or on
 a layer 2 off-screen buffer (paging in the screen / off-screen sections as
 necessary).
@@ -162,6 +160,48 @@ Note: If you're drawing on a layer 2 off-screen buffer, the code to be
 executed, the stack, the interrupt vector table and isr(s), and any required
 data cannot be located in the RAM bank at 0xC000, which will be temporarily
 paged out when drawing on a paged-in layer 2 off-screen buffer.
+
+### Hardware Scrolling
+
+The layer 2 screen supports horizontal and vertical pixel-smooth hardware
+scrolling. The scrolling is done by offsetting the screen in the X and/or Y
+direction in a wrapping manner. Without any offsetting applied, i.e. with the
+X and Y offsets set to 0, the screen is made of up 256 pixel columns in the X
+positions [0, 1, ..., 254, 255] and 192 pixel rows in the Y positions
+[0, 1, ..., 190, 191]. The screen offsets are easiest described by the
+examples below.
+
+If the X offset is set to 1, the columns of the screen will be reorganised as
+[1, 2, ..., 254, 255, 0], setting it to 5 yields [5, 6, ..., 254, 255, 0, 1,
+2, 3, 4], setting it to 254 yields [254, 255, 0, 1, 2, ..., 252, 253],
+setting it to 255 yields [255, 0, 1, 2, ..., 253, 254], and setting it back
+to 0 yields [0, 1, ..., 254, 255]. Thus, setting the X offset to 1, 2, 3, ...,
+254, 255, 0 will scroll the screen, one pixel at a time, 256 pixels to the
+left so it will be back in its original position again. Setting the X offset
+to 255, 254, 253, ..., 2, 1, 0 will scroll the screen, one pixel at a time,
+256 pixels to the right so it will be back in its original position again.
+
+If the Y offset is set to 1, the rows of the screen will be reorganised as
+[1, 2, ..., 190, 191, 0], setting it to 5 yields [5, 6, ..., 190, 191, 0, 1,
+2, 3, 4], setting it to 190 yields [190, 191, 0, 1, 2, ..., 188, 189],
+setting it to 191 yields [191, 0, 1, 2, ..., 189, 190], and setting it back
+to 0 yields [0, 1, ..., 190, 191]. Thus, setting the Y offset to 1, 2, 3, ...,
+190, 191, 0 will scroll the screen, one pixel at a time, 192 pixels upwards
+so it will be back in its original position again. Setting the Y offset to
+191, 190, 189, ..., 2, 1, 0 will scroll the screen, one pixel at a time, 192
+pixels downwards so it will be back in its original position again.
+
+To scroll between multiple screens horizontally, you must fill in the column
+being scrolled out of the screen with the corresponding column from the
+screen to be scrolled in. To scroll between multiple screens vertically, you
+must fill in the row being scrolled out of the screen with the corresponding
+row from the screen to be scrolled in. When scrolling between multiple
+screens, it is convenient to use layer 2 off-screen buffers for the screens
+to be scrolled in.
+
+The [zxnext_layer2_demo](https://github.com/stefanbylund/zxnext_layer2_demo)
+project contains several scrolling examples that make it easier to understand
+how the hardware scrolling of the layer 2 screen is actually done.
 
 ## Known Problems
 
