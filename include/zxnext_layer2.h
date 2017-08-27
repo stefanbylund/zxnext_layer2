@@ -71,6 +71,18 @@
 #define LAYER2_SCREEN_BOTTOM 2
 
 /*
+ * Macro for incrementing an Y coordinate (0-191) in a wrapping manner,
+ * i.e. incrementing 191 yields 0.
+ */
+#define INC_Y(y) ((((y) + 1) >= 192) ? 0 : ((y) + 1))
+
+/*
+ * Macro for decrementing an Y coordinate (0-191) in a wrapping manner,
+ * i.e. decrementing 0 yields 191.
+ */
+#define DEC_Y(y) ((((uint8_t) ((y) - 1)) == 255) ? 191 : ((y) - 1))
+
+/*
  * Structure specifying a layer 2 off-screen buffer. A layer 2 off-screen buffer
  * is divided in a top, middle and bottom section of the size 256 * 64 pixels
  * (16 KB) in the same way as the layer 2 screen. This structure describes in
@@ -303,5 +315,24 @@ void layer2_blit_transparent(uint8_t x,
                              uint16_t width,
                              uint8_t height,
                              off_screen_buffer_t *off_screen_buffer);
+
+/*
+ * Blit a row of pixels from the specified source layer 2 off-screen buffer at
+ * the given source Y coordinate (0-191) to the layer 2 screen at the given
+ * destination Y coordinate (0-191).
+ *
+ * This is a specialized blit function optimized for blitting new rows in layer
+ * 2 screen vertical scrolling.
+ */
+void layer2_blit_off_screen_row(uint8_t dest_y, off_screen_buffer_t *source, uint8_t source_y);
+
+/* Blit a column of pixels from the specified source layer 2 off-screen buffer
+ * at the given source X coordinate (0-255) to the layer 2 screen at the given
+ * destination X coordinate (0-255).
+ *
+ * This is a specialized blit function optimized for blitting new columns in
+ * layer 2 screen horizontal scrolling.
+ */
+void layer2_blit_off_screen_column(uint8_t dest_x, off_screen_buffer_t *source, uint8_t source_x);
 
 #endif
