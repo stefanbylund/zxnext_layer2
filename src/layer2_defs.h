@@ -13,6 +13,7 @@
 
 #define LAYER2_PORT 0x123B
 #define BANK_PORT 0x7FFD
+#define EXT_BANK_PORT 0xDFFD
 
 #define BANK_SYS_VAR 0x5B5C
 #define ROM_FONT_ADDRESS 0x3D00
@@ -30,5 +31,6 @@ __sfr __banked __at REGISTER_NUMBER_PORT IO_REGISTER_NUMBER_PORT;
 __sfr __banked __at REGISTER_VALUE_PORT IO_REGISTER_VALUE_PORT;
 __sfr __banked __at LAYER2_PORT IO_LAYER2_PORT;
 __sfr __banked __at BANK_PORT IO_BANK_PORT;
+__sfr __banked __at EXT_BANK_PORT IO_EXT_BANK_PORT;
 
 #endif

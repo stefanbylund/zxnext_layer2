@@ -75,9 +75,12 @@ void switch_ram_bank(uint8_t bank)
 {
     uint8_t old_value = z80_bpeek(BANK_SYS_VAR);
     uint8_t new_value = (old_value & 0xF8) | (bank & 0x07);
+    uint8_t ext_value = (bank & 0x38) >> 3;
+
     intrinsic_di();
     z80_bpoke(BANK_SYS_VAR, new_value);
     IO_BANK_PORT = new_value;
+    IO_EXT_BANK_PORT = ext_value;
     intrinsic_ei();
 }
 
@@ -85,6 +88,7 @@ void switch_rom_bank(uint8_t bank)
 {
     uint8_t old_value = z80_bpeek(BANK_SYS_VAR);
     uint8_t new_value = (old_value & 0xEF) | ((bank & 0x01) << 4);
+
     intrinsic_di();
     z80_bpoke(BANK_SYS_VAR, new_value);
     IO_BANK_PORT = new_value;
