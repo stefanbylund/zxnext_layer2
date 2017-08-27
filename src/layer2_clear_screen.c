@@ -4,7 +4,6 @@
  * Implementation of layer2_clear_screen() in zxnext_layer2.h.
  ******************************************************************************/
 
-#include <intrinsic.h>
 #include <stdint.h>
 #include <string.h>
 
@@ -42,7 +41,9 @@ static void layer2_clear_screen_section(off_screen_buffer_t *off_screen_buffer)
 
     while (height--)
     {
-        intrinsic_ldi(dest, buf_256, 256);
+        // TODO: Doesn't work with sdcc_ix.
+        //intrinsic_ldi(dest, buf_256, 256);
+        memcpy(dest, buf_256, 256);
         dest += 256;
     }
 }

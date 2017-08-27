@@ -17,7 +17,7 @@ ZEsarUX and CSpect emulators and when the layer 2 screen specification is
 finally published.
 
 This API has been tested and verified to work with the z88dk C compiler
-(2017-08-18 snapshot) and the ZEsarUX 5.1 (2017-07-24 snapshot) and CSpect 0.6
+(2017-08-27 snapshot) and the ZEsarUX 5.1 (2017-07-24 snapshot) and CSpect 0.9
 emulators. See the "Known Problems" section below for a list of known problems
 and workarounds.
 
@@ -165,9 +165,7 @@ paged out when drawing on a paged-in layer 2 off-screen buffer.
 
 ## Known Problems
 
-The layer2_clear_screen() function does not work properly when using the sdcc_ix
-flavour of zxnext_layer2.lib. The problem seems to be in the sdcc_ix flavour of
-the z88dk function intrinsic_ldi() used by layer2_clear_screen().
+Hardware scrolling of the layer 2 screen is currently not supported by ZEsarUX.
 
 When using the ZEsarUX emulator, the layer2_draw_text() function, if using the
 Spectrum ROM font, only works if the TAP file is given as a command-line argument
