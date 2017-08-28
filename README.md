@@ -70,6 +70,15 @@ version of z88dk and ZEsarUX or CSpect.
 **Tip:** See the [zxnext_layer2_demo](https://github.com/stefanbylund/zxnext_layer2_demo)
 project for an example of how to use zxnext_layer2.h and link with zxnext_layer2.lib.
 
+**Tip:** There are two C compilers in z88dk; the SDCC compiler and the SCCZ80
+compiler. I recommend to use the SDCC compiler since it generates more optimised
+code than the SCCZ80 compiler. There are two versions of the C runtime library
+for the SDCC compiler; one called sdcc_ix and another called sdcc_iy. From my
+experience, sdcc_iy is the more stable version. In summary, for optimal
+performance, use the SDCC compiler with the sdcc_iy C runtime library. However,
+the SCCZ80 compiler still has it use during development since it compiles much
+faster than the SDCC compiler.
+
 **Tip:** If you copy the zxnext_layer2 header files and libraries into the
 following directories in z88dk, the z88dk compiler will automatically find them
 without the need for setting up any include and library paths:
