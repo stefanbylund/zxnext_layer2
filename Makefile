@@ -55,6 +55,7 @@ debug_sdcc_ix: all_sdcc_ix
 debug_sdcc_iy: all_sdcc_iy
 
 distro:
+	$(RM) build/zxnext_layer2.zip
 	cd ..; $(ZIP) zxnext_layer2/build/zxnext_layer2.zip zxnext_layer2/include zxnext_layer2/lib
 
 clean:

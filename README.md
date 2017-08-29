@@ -161,9 +161,13 @@ Note: The layer 2 screen is paged-in in a special way and is only accessible
 for writing. If you read the paged-in layer 2 screen memory, you will see the
 Spectrum BASIC ROM and not the layer 2 screen.
 
-This API provides optional functions for drawing on the layer 2 screen or on
-a layer 2 off-screen buffer (paging in the screen / off-screen sections as
-necessary).
+This API provides a graphics library of functions for drawing on the layer 2
+screen or on a layer 2 off-screen buffer. The drawing functions automatically
+page in the screen/off-screen sections as necessary and take care of the
+complications when a drawing operation covers more than one section. The
+graphics library provides support for drawing pixels, lines, rectangles,
+filled rectangles, text, loading of layer 2 screen files and various types of
+blitting.
 
 Note: If you're drawing on a layer 2 off-screen buffer, the code to be
 executed, the stack, the interrupt vector table and isr(s), and any required
