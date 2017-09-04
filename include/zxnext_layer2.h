@@ -161,26 +161,22 @@ void layer2_configure(bool layer2_visible,
                       uint8_t layer2_screen_section);
 
 /*
- * Set the 4-bit IGRB ULA colour used for transparency in the Spectrum ULA
- * screen if the layer 2 screen is located behind it. The default transparency
- * colour is 1000 which represents bright black, which is normally not used
- * since it is indistinguishable from the normal black colour.
+ * Set the global RRRGGGBB colour used for transparency in the layer 2 screen
+ * and ULA screen. The default transparency colour is 0xE3.
  *
- * The layer 2 screen will show through in those parts of the Spectrum ULA
- * screen where the pixels have the specified ULA transparency colour.
+ * The ULA screen will show through in those parts of the layer 2 screen where
+ * the pixels have the specified transparency colour and vice versa.
  */
-void layer2_set_ula_transparency_color(uint8_t color);
+void layer2_set_global_transparency_color(uint8_t color);
 
 /*
- * Returns the 4-bit IGRB ULA colour used for transparency in the Spectrum ULA
- * screen if the layer 2 screen is located behind it. The default transparency
- * colour is 1000 which represents bright black, which is normally not used
- * since it is indistinguishable from the normal black colour.
+ * Returns the global RRRGGGBB colour used for transparency in the layer 2
+ * screen and ULA screen. The default transparency colour is 0xE3.
  *
- * The layer 2 screen will show through in those parts of the Spectrum ULA
- * screen where the pixels have the defined ULA transparency colour.
+ * The ULA screen will show through in those parts of the layer 2 screen where
+ * the pixels have the specified transparency colour and vice versa.
  */
-uint8_t layer2_get_ula_transparency_color(void);
+uint8_t layer2_get_global_transparency_color(void);
 
 /*
  * Offset the columns of the layer 2 screen horizontally on the X axis in a
