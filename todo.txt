@@ -1,5 +1,7 @@
 * Switch to zxn target in z88dk when stable.
 
+* Add subset of set_sprite_layers_system() function from zxnext_sprite.h.
+
 * Update README.md and zxnext_layer2.h header.
 
 * Draw/fill circle and ellipse.
@@ -9,6 +11,8 @@
 * Use something else than BANK_SYS_VAR?
 
 * Add support for layer 2 screen front/back buffer feature.
+
+* Add support for setting the two palettes containing 256 9-bit colour values.
 
 * Improve performance of layer2_blit_transparent() function.
 
