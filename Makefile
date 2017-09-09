@@ -11,14 +11,28 @@ RM := rm -rf
 
 ZIP := zip -r -q
 
-SRCS := src/layer2_configure.c src/layer2_set_global_transparency_color.c \
-src/layer2_get_global_transparency_color.c src/layer2_set_offset_x.c \
-src/layer2_get_offset_x.c src/layer2_set_offset_y.c src/layer2_get_offset_y.c \
-src/layer2_clear_screen.c src/layer2_load_screen.c src/layer2_copy_off_screen.c \
-src/layer2_draw_pixel.c src/layer2_draw_pixel_fast.c src/layer2_draw_line.c \
-src/layer2_draw_rect.c src/layer2_draw_text.c src/layer2_fill_rect.c \
-src/layer2_blit.c src/layer2_blit_transparent.c src/layer2_blit_off_screen_row.c \
-src/layer2_blit_off_screen_column.c src/layer2_common.c
+SRCS := src/layer2_configure.c \
+src/layer2_set_layer_priorities.c \
+src/layer2_set_global_transparency_color.c \
+src/layer2_get_global_transparency_color.c \
+src/layer2_set_offset_x.c \
+src/layer2_get_offset_x.c \
+src/layer2_set_offset_y.c \
+src/layer2_get_offset_y.c \
+src/layer2_clear_screen.c \
+src/layer2_load_screen.c \
+src/layer2_copy_off_screen.c \
+src/layer2_draw_pixel.c \
+src/layer2_draw_pixel_fast.c \
+src/layer2_draw_line.c \
+src/layer2_draw_rect.c \
+src/layer2_draw_text.c \
+src/layer2_fill_rect.c \
+src/layer2_blit.c \
+src/layer2_blit_transparent.c \
+src/layer2_blit_off_screen_row.c \
+src/layer2_blit_off_screen_column.c \
+src/layer2_common.c
 
 LIBDIR_SCCZ80 := lib/sccz80
 

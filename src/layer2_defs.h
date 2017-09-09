@@ -24,6 +24,9 @@
 #define LAYER2_SCREEN_SECTION_MASK 0x03
 #define LAYER2_SCREEN_SECTION_SHIFT 6
 
+#define LAYER_PRIORITIES_MASK 0x07
+#define LAYER_PRIORITIES_SHIFT 2
+
 #define SCREEN_ADDRESS(off_screen_buffer) (((off_screen_buffer) != NULL) ? (uint8_t *) 0xC000 : (uint8_t *) 0)
 
 __sfr __banked __at REGISTER_NUMBER_PORT IO_REGISTER_NUMBER_PORT;

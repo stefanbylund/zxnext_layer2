@@ -115,6 +115,38 @@
 /* Layer 2 screen bottom section. */
 #define LAYER2_SCREEN_BOTTOM 2
 
+// The LAYER_PRIORITIES_* definitions are duplicated from zxnext_sprite.h.
+
+/* Sprites over layer 2 screen over ULA screen (default). */
+#ifndef LAYER_PRIORITIES_S_L_U
+#define LAYER_PRIORITIES_S_L_U 0x0
+#endif
+
+/* Layer 2 screen over sprites over ULA screen. */
+#ifndef LAYER_PRIORITIES_L_S_U
+#define LAYER_PRIORITIES_L_S_U 0x1
+#endif
+
+/* Sprites over ULA screen over layer 2 screen. */
+#ifndef LAYER_PRIORITIES_S_U_L
+#define LAYER_PRIORITIES_S_U_L 0x2
+#endif
+
+/* Layer 2 screen over ULA screen over sprites. */
+#ifndef LAYER_PRIORITIES_L_U_S
+#define LAYER_PRIORITIES_L_U_S 0x3
+#endif
+
+/* ULA screen over sprites over layer 2 screen. */
+#ifndef LAYER_PRIORITIES_U_S_L
+#define LAYER_PRIORITIES_U_S_L 0x4
+#endif
+
+/* ULA screen over layer 2 screen over sprites. */
+#ifndef LAYER_PRIORITIES_U_L_S
+#define LAYER_PRIORITIES_U_L_S 0x5
+#endif
+
 /*
  * Macro for incrementing an Y coordinate (0-191) in a wrapping manner,
  * i.e. incrementing 191 yields 0.
@@ -159,6 +191,12 @@ void layer2_configure(bool layer2_visible,
                       bool layer2_behind_ula_screen,
                       bool layer2_write_enabled,
                       uint8_t layer2_screen_section);
+
+/*
+ * Set the layer priorities between the sprites and the layer 2 and ULA screens
+ * (LAYER_PRIORITIES_S_L_U etc).
+ */
+void layer2_set_layer_priorities(uint8_t layer_priorities);
 
 /*
  * Set the global RRRGGGBB colour used for transparency in the layer 2 screen
