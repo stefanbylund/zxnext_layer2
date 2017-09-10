@@ -1,7 +1,5 @@
 * Switch to zxn target in z88dk when stable.
 
-* Add subset of set_sprite_layers_system() function from zxnext_sprite.h.
-
 * Update README.md and zxnext_layer2.h header.
 
 * Draw/fill circle and ellipse.

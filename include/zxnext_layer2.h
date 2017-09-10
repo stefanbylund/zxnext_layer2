@@ -182,13 +182,21 @@ typedef struct off_screen_buffer
 
 /*
  * Configure the layer 2 screen properties. Specify if the layer 2 screen should
- * be visible, if it should be behind or in front of the Spectrum ULA screen, if
- * it should be enabled for writing, and if so, which section of the layer 2
- * screen (LAYER2_SCREEN_TOP, LAYER2_SCREEN_MIDDLE or LAYER2_SCREEN_BOTTOM)
- * should be paged in for writing to.
+ * be visible or not. You can also specify if the layer 2 screen should be
+ * enabled for writing, and if so, if the main or shadow layer 2 screen should
+ * be written to and which section of the specified layer 2 screen
+ * (LAYER2_SCREEN_TOP, LAYER2_SCREEN_MIDDLE or LAYER2_SCREEN_BOTTOM) should be
+ * paged in for writing.
+ *
+ * If you use the graphics functions in this library, you only need to initially
+ * configure the layer 2 screen to be visible, i.e. layer2_configure(true, false,
+ * false, 0), the graphics functions will internally handle the paging and
+ * writing of the main or shadow layer 2 screen. However, if you want to write
+ * directly on the layer 2 screen, you need to call this function to specify
+ * where to write.
  */
 void layer2_configure(bool layer2_visible,
-                      bool layer2_behind_ula_screen,
+                      bool layer2_shadow_screen,
                       bool layer2_write_enabled,
                       uint8_t layer2_screen_section);
 

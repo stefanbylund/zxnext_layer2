@@ -15,10 +15,10 @@
 // Then we should also preserve the other bits when setting the layer 2 screen
 // section for writing.
 
-// FIXME: Remove parameter layer2_behind_ula_screen later on.
+// FIXME: Switch order between layer2_write_enabled and layer2_shadow_screen.
 
 void layer2_configure(bool layer2_visible,
-                      bool layer2_behind_ula_screen,
+                      bool layer2_shadow_screen,
                       bool layer2_write_enabled,
                       uint8_t layer2_screen_section)
 {
@@ -29,9 +29,9 @@ void layer2_configure(bool layer2_visible,
         value = value | LAYER2_VISIBLE_MASK;
     }
 
-    if (layer2_behind_ula_screen)
+    if (layer2_shadow_screen)
     {
-        value = value | LAYER2_BEHIND_ULA_SCREEN_MASK;
+        value = value | LAYER2_SHADOW_SCREEN_MASK;
     }
 
     if (layer2_write_enabled)
