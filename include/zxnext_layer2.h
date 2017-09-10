@@ -207,6 +207,54 @@ void layer2_configure(bool layer2_visible,
 void layer2_set_layer_priorities(uint8_t layer_priorities);
 
 /*
+ * Set the main layer 2 screen RAM banks. The given parameter specifies the RAM
+ * bank for the top section of the main layer 2 screen. The middle and bottom
+ * sections implicitly follows on the consecutive RAM banks.
+ *
+ * By default, the RAM banks 8 (top section), 9 (middle section) and 10 (bottom
+ * section) are used by the main layer 2 screen.
+ *
+ * Note: This function determines which layer 2 screen RAM banks are actually
+ * displayed on the screen. Calling this function with the starting RAM bank of
+ * the layer 2 shadow screen or a layer 2 off-screen buffer (with consecutive
+ * RAM banks) will make the layer 2 shadow screen or the layer 2 off-screen
+ * buffer the new main layer 2 screen and their contents will be directly
+ * visible on the display.
+ */
+void layer2_set_main_screen_ram_bank(uint8_t bank);
+
+/*
+ * Returns the starting RAM bank of the main layer 2 screen. The returned value
+ * specifies the RAM bank for the top section of the main layer 2 screen. The
+ * middle and bottom sections implicitly follows on the consecutive RAM banks.
+ *
+ * By default, the RAM banks 8 (top section), 9 (middle section) and 10 (bottom
+ * section) are used by the main layer 2 screen.
+ */
+uint8_t layer2_get_main_screen_ram_bank(void);
+
+/*
+ * Set the shadow layer 2 screen RAM banks. The given parameter specifies the
+ * RAM bank for the top section of the shadow layer 2 screen. The middle and
+ * bottom sections implicitly follows on the consecutive RAM banks.
+ *
+ * By default, the RAM banks 11 (top section), 12 (middle section) and 13
+ * (bottom section) are used by the shadow layer 2 screen.
+ */
+void layer2_set_shadow_screen_ram_bank(uint8_t bank);
+
+/*
+ * Returns the starting RAM bank of the shadow layer 2 screen. The returned
+ * value specifies the RAM bank for the top section of the shadow layer 2
+ * screen. The middle and bottom sections implicitly follows on the consecutive
+ * RAM banks.
+ *
+ * By default, the RAM banks 11 (top section), 12 (middle section) and 13
+ * (bottom section) are used by the shadow layer 2 screen.
+ */
+uint8_t layer2_get_shadow_screen_ram_bank(void);
+
+/*
  * Set the global RRRGGGBB colour used for transparency in the layer 2 screen
  * and ULA screen. The default transparency colour is 0xE3.
  *

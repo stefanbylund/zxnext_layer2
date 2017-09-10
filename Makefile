@@ -13,6 +13,10 @@ ZIP := zip -r -q
 
 SRCS := src/layer2_configure.c \
 src/layer2_set_layer_priorities.c \
+src/layer2_set_main_screen_ram_bank.c \
+src/layer2_get_main_screen_ram_bank.c \
+src/layer2_set_shadow_screen_ram_bank.c \
+src/layer2_get_shadow_screen_ram_bank.c \
 src/layer2_set_global_transparency_color.c \
 src/layer2_get_global_transparency_color.c \
 src/layer2_set_offset_x.c \
