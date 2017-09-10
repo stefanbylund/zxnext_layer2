@@ -27,18 +27,18 @@ void layer2_blit_off_screen_row(uint8_t dest_y, off_screen_buffer_t *source, uin
     if (dest_y < 64)
     {
         // top
-        layer2_configure(true, false, true, LAYER2_SCREEN_TOP);
+        layer2_configure(true, true, false, LAYER2_SCREEN_TOP);
     }
     else if (dest_y < 128)
     {
         // middle
-        layer2_configure(true, false, true, LAYER2_SCREEN_MIDDLE);
+        layer2_configure(true, true, false, LAYER2_SCREEN_MIDDLE);
         dest_y -= 64;
     }
     else
     {
         // bottom
-        layer2_configure(true, false, true, LAYER2_SCREEN_BOTTOM);
+        layer2_configure(true, true, false, LAYER2_SCREEN_BOTTOM);
         dest_y -= 128;
     }
 

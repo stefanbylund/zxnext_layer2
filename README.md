@@ -228,12 +228,6 @@ Spectrum ROM font. When the TAP file is loaded from the ZEsarUX GUI, the attempt
 to page in the Spectrum BASIC ROM to the bottom 16 KB fails for an unknown
 reason.
 
-When using the CSpect emulator, the sccz80 flavour of the layer2_load_screen()
-function does not work. The sdcc_ix and sdcc_iy flavours work fine though. The
-sccz80 flavour can be made to work in CSpect by removing a temporary workaround
-in layer2_load_screen() but then it will stop working in ZEsarUX. At the next
-update of ZEsarUX, this workaround will fortunately no longer be needed.
-
 ## License
 
 This software is licensed under the terms of the MIT license.

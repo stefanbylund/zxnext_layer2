@@ -27,7 +27,7 @@ void switch_top_screen_section(off_screen_buffer_t *off_screen_buffer)
 {
     if (off_screen_buffer == NULL)
     {
-        layer2_configure(true, false, true, LAYER2_SCREEN_TOP);
+        layer2_configure(true, true, false, LAYER2_SCREEN_TOP);
     }
     else
     {
@@ -39,7 +39,7 @@ void switch_middle_screen_section(off_screen_buffer_t *off_screen_buffer)
 {
     if (off_screen_buffer == NULL)
     {
-        layer2_configure(true, false, true, LAYER2_SCREEN_MIDDLE);
+        layer2_configure(true, true, false, LAYER2_SCREEN_MIDDLE);
     }
     else
     {
@@ -51,7 +51,7 @@ void switch_bottom_screen_section(off_screen_buffer_t *off_screen_buffer)
 {
     if (off_screen_buffer == NULL)
     {
-        layer2_configure(true, false, true, LAYER2_SCREEN_BOTTOM);
+        layer2_configure(true, true, false, LAYER2_SCREEN_BOTTOM);
     }
     else
     {

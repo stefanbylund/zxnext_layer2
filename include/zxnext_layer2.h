@@ -196,8 +196,8 @@ typedef struct off_screen_buffer
  * where to write.
  */
 void layer2_configure(bool layer2_visible,
-                      bool layer2_shadow_screen,
                       bool layer2_write_enabled,
+                      bool layer2_shadow_screen,
                       uint8_t layer2_screen_section);
 
 /*

@@ -7,11 +7,6 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <errno.h>
-
-// FIXME: Remove when ZEsarUX is updated.
-#ifdef __SCCZ80
-#define __ESXDOS_DOT_COMMAND
-#endif
 #include <arch/zx/esxdos.h>
 
 #include "zxnext_layer2.h"
