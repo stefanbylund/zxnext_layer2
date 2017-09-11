@@ -15,9 +15,9 @@
 
 static void layer2_blit_off_screen_column_section(uint8_t dest_x, uint8_t source_x);
 
-void layer2_blit_off_screen_column(uint8_t dest_x, off_screen_buffer_t *source, uint8_t source_x)
+void layer2_blit_off_screen_column(uint8_t dest_x, layer2_screen_t *source, uint8_t source_x)
 {
-    if (source == NULL)
+    if ((source == NULL) || (source->screen_type != OFF_SCREEN))
     {
         return;
     }

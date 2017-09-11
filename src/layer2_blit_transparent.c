@@ -17,14 +17,14 @@ static void layer2_blit_transparent_section(uint8_t x,
                                             const uint8_t *source,
                                             uint16_t width,
                                             uint8_t height,
-                                            off_screen_buffer_t *off_screen_buffer);
+                                            layer2_screen_t *screen);
 
 void layer2_blit_transparent(uint8_t x,
                              uint8_t y,
                              const uint8_t *source,
                              uint16_t width,
                              uint8_t height,
-                             off_screen_buffer_t *off_screen_buffer)
+                             layer2_screen_t *screen)
 {
     if ((y > 191) || (source == NULL) || (width == 0) || (height == 0))
     {
@@ -38,7 +38,7 @@ void layer2_blit_transparent(uint8_t x,
         height = 191 - y + 1;
     }
 
-    init_switch_screen(off_screen_buffer);
+    init_switch_screen(screen);
 
     if (y < 64)
     {
@@ -46,32 +46,32 @@ void layer2_blit_transparent(uint8_t x,
         if (y + height - 1 < 64)
         {
             // top
-            switch_top_screen_section(off_screen_buffer);
-            layer2_blit_transparent_section(x, y, source, width, height, off_screen_buffer);
+            switch_top_screen_section(screen);
+            layer2_blit_transparent_section(x, y, source, width, height, screen);
         }
         else if (y + height - 1 < 128)
         {
             // top
-            switch_top_screen_section(off_screen_buffer);
-            layer2_blit_transparent_section(x, y, source, width, 64 - y, off_screen_buffer);
+            switch_top_screen_section(screen);
+            layer2_blit_transparent_section(x, y, source, width, 64 - y, screen);
 
             // middle
-            switch_middle_screen_section(off_screen_buffer);
-            layer2_blit_transparent_section(x, 0, source + width * (64 - y), width, height - (64 - y), off_screen_buffer);
+            switch_middle_screen_section(screen);
+            layer2_blit_transparent_section(x, 0, source + width * (64 - y), width, height - (64 - y), screen);
         }
         else
         {
             // top
-            switch_top_screen_section(off_screen_buffer);
-            layer2_blit_transparent_section(x, y, source, width, 64 - y, off_screen_buffer);
+            switch_top_screen_section(screen);
+            layer2_blit_transparent_section(x, y, source, width, 64 - y, screen);
 
             // middle
-            switch_middle_screen_section(off_screen_buffer);
-            layer2_blit_transparent_section(x, 0, source + width * (64 - y), width, 64, off_screen_buffer);
+            switch_middle_screen_section(screen);
+            layer2_blit_transparent_section(x, 0, source + width * (64 - y), width, 64, screen);
 
             // bottom
-            switch_bottom_screen_section(off_screen_buffer);
-            layer2_blit_transparent_section(x, 0, source + width * (128 - y), width, height - (128 - y), off_screen_buffer);
+            switch_bottom_screen_section(screen);
+            layer2_blit_transparent_section(x, 0, source + width * (128 - y), width, height - (128 - y), screen);
         }
     }
     else if (y < 128)
@@ -80,28 +80,28 @@ void layer2_blit_transparent(uint8_t x,
         if (y + height - 1 < 128)
         {
             // middle
-            switch_middle_screen_section(off_screen_buffer);
-            layer2_blit_transparent_section(x, y - 64, source, width, height, off_screen_buffer);
+            switch_middle_screen_section(screen);
+            layer2_blit_transparent_section(x, y - 64, source, width, height, screen);
         }
         else
         {
             // middle
-            switch_middle_screen_section(off_screen_buffer);
-            layer2_blit_transparent_section(x, y - 64, source, width, 128 - y, off_screen_buffer);
+            switch_middle_screen_section(screen);
+            layer2_blit_transparent_section(x, y - 64, source, width, 128 - y, screen);
 
             // bottom
-            switch_bottom_screen_section(off_screen_buffer);
-            layer2_blit_transparent_section(x, 0, source + width * (128 - y), width, height - (128 - y), off_screen_buffer);
+            switch_bottom_screen_section(screen);
+            layer2_blit_transparent_section(x, 0, source + width * (128 - y), width, height - (128 - y), screen);
         }
     }
     else
     {
         // bottom
-        switch_bottom_screen_section(off_screen_buffer);
-        layer2_blit_transparent_section(x, y - 128, source, width, height, off_screen_buffer);
+        switch_bottom_screen_section(screen);
+        layer2_blit_transparent_section(x, y - 128, source, width, height, screen);
     }
 
-    end_switch_screen(off_screen_buffer);
+    end_switch_screen(screen);
 }
 
 static void layer2_blit_transparent_section(uint8_t x,
@@ -109,9 +109,9 @@ static void layer2_blit_transparent_section(uint8_t x,
                                             const uint8_t *source,
                                             uint16_t width,
                                             uint8_t height,
-                                            off_screen_buffer_t *off_screen_buffer)
+                                            layer2_screen_t *screen)
 {
-    uint8_t *dest = SCREEN_ADDRESS(off_screen_buffer) + x + (y << 8);
+    uint8_t *dest = SCREEN_ADDRESS(screen) + x + (y << 8);
     uint16_t clip_width = width;
 
     if (x + width - 1 > 255)

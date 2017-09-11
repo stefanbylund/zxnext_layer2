@@ -13,15 +13,15 @@
 
 extern uint8_t buf_256[];
 
-void init_switch_screen(off_screen_buffer_t *off_screen_buffer);
+void init_switch_screen(layer2_screen_t *screen);
 
-void switch_top_screen_section(off_screen_buffer_t *off_screen_buffer);
+void switch_top_screen_section(layer2_screen_t *screen);
 
-void switch_middle_screen_section(off_screen_buffer_t *off_screen_buffer);
+void switch_middle_screen_section(layer2_screen_t *screen);
 
-void switch_bottom_screen_section(off_screen_buffer_t *off_screen_buffer);
+void switch_bottom_screen_section(layer2_screen_t *screen);
 
-void end_switch_screen(off_screen_buffer_t *off_screen_buffer);
+void end_switch_screen(layer2_screen_t *screen);
 
 void switch_ram_bank(uint8_t bank);
 

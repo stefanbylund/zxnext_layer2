@@ -16,6 +16,6 @@
 void layer2_draw_pixel_fast(uint8_t x,
                             uint8_t y,
                             uint8_t color,
-                            off_screen_buffer_t *off_screen_buffer);
+                            layer2_screen_t *screen);
 
 #endif

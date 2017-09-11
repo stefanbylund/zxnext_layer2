@@ -181,6 +181,9 @@ typedef enum layer2_screen_type
  * SHADOW_SCREEN: The shadow layer 2 screen paged-in to the bottom 16 KB.
  * OFF_SCREEN: A layer 2 off-screen buffer paged-in to the top 16 KB.
  *
+ * For convenience, all drawing operations that take a pointer to a
+ * layer2_screen_t as parameter will treat NULL as the main layer 2 screen.
+ *
  * If the field screen_type is OFF_SCREEN, the fields top_bank, middle_bank and
  * bottom_bank specify the RAM banks for the top, middle and bottom sections of
  * the layer 2 off-screen buffer. These RAM banks are temporarily paged-in to

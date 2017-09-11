@@ -15,7 +15,7 @@ static void layer2_draw_char(uint8_t x,
                              uint8_t y,
                              char ch,
                              uint8_t color,
-                             off_screen_buffer_t *off_screen_buffer);
+                             layer2_screen_t *screen);
 
 static uint8_t *font_address = ROM_FONT_ADDRESS;
 
@@ -23,7 +23,7 @@ void layer2_draw_text(uint8_t row,
                       uint8_t column,
                       const char *text,
                       uint8_t color,
-                      off_screen_buffer_t *off_screen_buffer)
+                      layer2_screen_t *screen)
 {
     uint8_t x = column << 3;
     uint8_t y = row << 3;
@@ -34,7 +34,7 @@ void layer2_draw_text(uint8_t row,
         return;
     }
 
-    init_switch_screen(off_screen_buffer);
+    init_switch_screen(screen);
 
     // If the Spectrum ROM font is used, make sure ROM bank 1 is switched in.
     if (font_address == (uint8_t *) ROM_FONT_ADDRESS)
@@ -44,16 +44,16 @@ void layer2_draw_text(uint8_t row,
 
     if (y < 64)
     {
-        switch_top_screen_section(off_screen_buffer);
+        switch_top_screen_section(screen);
     }
     else if (y < 128)
     {
-        switch_middle_screen_section(off_screen_buffer);
+        switch_middle_screen_section(screen);
         y -= 64;
     }
     else
     {
-        switch_bottom_screen_section(off_screen_buffer);
+        switch_bottom_screen_section(screen);
         y -= 128;
     }
 
@@ -65,7 +65,7 @@ void layer2_draw_text(uint8_t row,
             ch = '?';
         }
 
-        layer2_draw_char(x, y, ch, color, off_screen_buffer);
+        layer2_draw_char(x, y, ch, color, screen);
 
         if (x == 248)
         {
@@ -76,7 +76,7 @@ void layer2_draw_text(uint8_t row,
         str++;
     }
 
-    end_switch_screen(off_screen_buffer);
+    end_switch_screen(screen);
 }
 
 void layer2_set_font(const void *new_font_address)
@@ -88,11 +88,11 @@ static void layer2_draw_char(uint8_t x,
                              uint8_t y,
                              char ch,
                              uint8_t color,
-                             off_screen_buffer_t *off_screen_buffer)
+                             layer2_screen_t *screen)
 {
     uint8_t lines = 8;
     uint8_t *source = font_address + ((ch - 32) << 3);
-    uint8_t *dest = SCREEN_ADDRESS(off_screen_buffer) + x + (y << 8);
+    uint8_t *dest = SCREEN_ADDRESS(screen) + x + (y << 8);
 
     while (lines--)
     {

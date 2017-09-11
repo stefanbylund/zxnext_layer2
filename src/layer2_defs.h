@@ -39,7 +39,7 @@
 #define LAYER_PRIORITIES_MASK 0x07
 #define LAYER_PRIORITIES_SHIFT 2
 
-#define SCREEN_ADDRESS(off_screen_buffer) (((off_screen_buffer) != NULL) ? (uint8_t *) 0xC000 : (uint8_t *) 0)
+#define SCREEN_ADDRESS(screen) ((((screen) != NULL) && ((screen)->screen_type == OFF_SCREEN)) ? (uint8_t *) 0xC000 : (uint8_t *) 0)
 
 __sfr __banked __at REGISTER_NUMBER_PORT IO_REGISTER_NUMBER_PORT;
 __sfr __banked __at REGISTER_VALUE_PORT IO_REGISTER_VALUE_PORT;

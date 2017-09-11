@@ -16,7 +16,7 @@ void layer2_draw_line(uint8_t x1,
                       uint8_t x2,
                       uint8_t y2,
                       uint8_t color,
-                      off_screen_buffer_t *off_screen_buffer)
+                      layer2_screen_t *screen)
 {
     uint16_t dx;
     uint16_t dy;
@@ -51,7 +51,7 @@ void layer2_draw_line(uint8_t x1,
         incy = -1;
     }
 
-    init_switch_screen(off_screen_buffer);
+    init_switch_screen(screen);
 
     if (dx >= dy)
     {
@@ -61,7 +61,7 @@ void layer2_draw_line(uint8_t x1,
 
         while (x1 != x2)
         {
-            layer2_draw_pixel_fast(x1, y1, color, off_screen_buffer);
+            layer2_draw_pixel_fast(x1, y1, color, screen);
             if (balance >= 0)
             {
                 y1 += incy;
@@ -71,7 +71,7 @@ void layer2_draw_line(uint8_t x1,
             x1 += incx;
         }
 
-        layer2_draw_pixel_fast(x1, y1, color, off_screen_buffer);
+        layer2_draw_pixel_fast(x1, y1, color, screen);
     }
     else
     {
@@ -81,7 +81,7 @@ void layer2_draw_line(uint8_t x1,
 
         while (y1 != y2)
         {
-            layer2_draw_pixel_fast(x1, y1, color, off_screen_buffer);
+            layer2_draw_pixel_fast(x1, y1, color, screen);
             if (balance >= 0)
             {
                 x1 += incx;
@@ -91,8 +91,8 @@ void layer2_draw_line(uint8_t x1,
             y1 += incy;
         }
 
-        layer2_draw_pixel_fast(x1, y1, color, off_screen_buffer);
+        layer2_draw_pixel_fast(x1, y1, color, screen);
     }
 
-    end_switch_screen(off_screen_buffer);
+    end_switch_screen(screen);
 }

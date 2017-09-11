@@ -14,34 +14,34 @@
 void layer2_draw_pixel(uint8_t x,
                        uint8_t y,
                        uint8_t color,
-                       off_screen_buffer_t *off_screen_buffer)
+                       layer2_screen_t *screen)
 {
     if (y > 191)
     {
         return;
     }
 
-    init_switch_screen(off_screen_buffer);
+    init_switch_screen(screen);
 
     if (y < 64)
     {
         // top
-        switch_top_screen_section(off_screen_buffer);
+        switch_top_screen_section(screen);
     }
     else if (y < 128)
     {
         // middle
-        switch_middle_screen_section(off_screen_buffer);
+        switch_middle_screen_section(screen);
         y -= 64;
     }
     else
     {
         // bottom
-        switch_bottom_screen_section(off_screen_buffer);
+        switch_bottom_screen_section(screen);
         y -= 128;
     }
 
-    z80_bpoke(SCREEN_ADDRESS(off_screen_buffer) + x + (y << 8), color);
+    z80_bpoke(SCREEN_ADDRESS(screen) + x + (y << 8), color);
 
-    end_switch_screen(off_screen_buffer);
+    end_switch_screen(screen);
 }

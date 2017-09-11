@@ -14,12 +14,12 @@
 #include "layer2_defs.h"
 #include "layer2_common.h"
 
-void layer2_blit_off_screen_row(uint8_t dest_y, off_screen_buffer_t *source, uint8_t source_y)
+void layer2_blit_off_screen_row(uint8_t dest_y, layer2_screen_t *source, uint8_t source_y)
 {
     uint8_t *dest_addr;
     uint8_t *source_addr;
 
-    if ((dest_y > 191) || (source_y > 191) || (source == NULL))
+    if ((dest_y > 191) || (source_y > 191) || (source == NULL) || (source->screen_type != OFF_SCREEN))
     {
         return;
     }

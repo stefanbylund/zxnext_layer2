@@ -13,9 +13,9 @@
 #include "layer2_defs.h"
 #include "layer2_common.h"
 
-void layer2_copy_off_screen(off_screen_buffer_t *off_screen_buffer)
+void layer2_copy_off_screen(layer2_screen_t *off_screen_buffer)
 {
-    if (off_screen_buffer == NULL)
+    if ((off_screen_buffer == NULL) || (off_screen_buffer->screen_type != OFF_SCREEN))
     {
         return;
     }
