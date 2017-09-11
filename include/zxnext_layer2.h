@@ -160,25 +160,53 @@
 #define DEC_Y(y) ((((uint8_t) ((y) - 1)) == 255) ? 191 : ((y) - 1))
 
 /*
- * Structure specifying a layer 2 off-screen buffer. A layer 2 off-screen buffer
- * is divided in a top, middle and bottom section of the size 256 * 64 pixels
- * (16 KB) in the same way as the layer 2 screen. This structure describes in
- * which RAM banks these sections reside. These RAM banks are temporarily paged-
- * in to the top 16 KB of the Z80's 64 KB memory space (i.e. at address 0xC000)
- * when drawing on the layer 2 off-screen buffer.
+ * Specifies the layer 2 screen type to draw on:
+ *
+ * MAIN_SCREEN: The main layer 2 screen paged-in to the bottom 16 KB.
+ * SHADOW_SCREEN: The shadow layer 2 screen paged-in to the bottom 16 KB.
+ * OFF_SCREEN: A layer 2 off-screen buffer paged-in to the top 16 KB.
+ */
+typedef enum layer2_screen_type
+{
+    MAIN_SCREEN,
+    SHADOW_SCREEN,
+    OFF_SCREEN
+} layer2_screen_type_t;
+
+/*
+ * Structure specifying the layer 2 screen context in a drawing operation.
+ * The layer 2 screen context specifies the layer 2 screen type to draw on:
+ *
+ * MAIN_SCREEN: The main layer 2 screen paged-in to the bottom 16 KB.
+ * SHADOW_SCREEN: The shadow layer 2 screen paged-in to the bottom 16 KB.
+ * OFF_SCREEN: A layer 2 off-screen buffer paged-in to the top 16 KB.
+ *
+ * If the field screen_type is OFF_SCREEN, the fields top_bank, middle_bank and
+ * bottom_bank specify the RAM banks for the top, middle and bottom sections of
+ * the layer 2 off-screen buffer. These RAM banks are temporarily paged-in to
+ * the top 16 KB of the 64 KB memory space (i.e. at address 0xC000) when drawing
+ * on the layer 2 off-screen buffer. If the field screen_type is MAIN_SCREEN or
+ * SHADOW_SCREEN, the fields top_bank, middle_bank and bottom_bank are not used.
  *
  * Note: If you're drawing on a layer 2 off-screen buffer, the code to be
  * executed, the stack, the interrupt vector table and isr(s), and any required
  * data cannot be located in the RAM bank at 0xC000, which will be temporarily
  * paged out when drawing on a paged-in layer 2 off-screen buffer.
+ *
+ * Note: The main/shadow layer 2 screen can be treated as a layer 2 off-screen
+ * buffer by specifying screen_type as OFF_SCREEN and specifying the RAM banks
+ * of the main/shadow layer 2 screen. The main/shadow layer 2 screen will then
+ * be temporarily paged-in to the top 16 KB (instead of the bottom 16 KB) when
+ * performing the drawing operation.
  */
-typedef struct off_screen_buffer
+typedef struct layer2_screen
 {
+    layer2_screen_type_t screen_type;
     uint8_t top_bank;
     uint8_t middle_bank;
     uint8_t bottom_bank;
     uint8_t tmp; // Reserved
-} off_screen_buffer_t;
+} layer2_screen_t;
 
 /*
  * Configure the layer 2 screen properties. Specify if the layer 2 screen should
@@ -273,7 +301,7 @@ void layer2_set_global_transparency_color(uint8_t color);
 uint8_t layer2_get_global_transparency_color(void);
 
 /*
- * Offset the columns of the layer 2 screen horizontally on the X axis in a
+ * Offset the columns of the main layer 2 screen horizontally on the X axis in a
  * wrapping manner for the specified amount of pixels (0-255).
  *
  * Passing in 1 will scroll the screen 1 pixel to the left and the column of
@@ -298,8 +326,8 @@ void layer2_set_offset_x(uint8_t offset_x);
 uint8_t layer2_get_offset_x(void);
 
 /*
- * Offset the rows of the layer 2 screen vertically on the Y axis in a wrapping
- * manner for the specified amount of pixels (0-191).
+ * Offset the rows of the main layer 2 screen vertically on the Y axis in a
+ * wrapping manner for the specified amount of pixels (0-191).
  *
  * Passing in 1 will scroll the screen 1 pixel up and the row of pixels being
  * scrolled out will reappear at the bottom.
@@ -320,67 +348,65 @@ void layer2_set_offset_y(uint8_t offset_y);
  */
 uint8_t layer2_get_offset_y(void);
 
-// Optional functions for drawing on the layer 2 screen or on a layer 2 off-
-// screen buffer (paging in the screen / off-screen sections as necessary).
+// Optional functions for drawing on the main/shadow layer 2 screen or on a layer
+// 2 off-screen buffer (paging in the screen / off-screen sections as necessary).
 
 /*
- * Clear the layer 2 screen (or the specified layer 2 off-screen buffer) using
- * the specified RRRGGGBB colour.
+ * Clear the specified layer 2 screen using the specified RRRGGGBB colour.
  */
-void layer2_clear_screen(uint8_t color, off_screen_buffer_t *off_screen_buffer);
+void layer2_clear_screen(uint8_t color, layer2_screen_t *screen);
 
 /*
  * Load the specified layer 2 screen file (containing 256 * 192 RRRGGGBB pixels)
- * using ESXDOS into the layer 2 screen or the specified layer 2 off-screen
- * buffer.
+ * using ESXDOS into the specified layer 2 screen memory.
  *
  * If there is any error when loading the file, errno is set with the
  * corresponding ESXDOS error code.
  */
-void layer2_load_screen(const char *filename, off_screen_buffer_t *off_screen_buffer);
+void layer2_load_screen(const char *filename, layer2_screen_t *screen);
 
 /*
- * Copy the specified layer 2 off-screen buffer to the layer 2 screen.
+ * Copy the specified layer 2 off-screen buffer to the main layer 2 screen.
  */
-void layer2_copy_off_screen(off_screen_buffer_t *off_screen_buffer);
+void layer2_copy_off_screen(layer2_screen_t *off_screen_buffer);
 
 /*
- * Draw a pixel on the layer 2 screen (or the specified layer 2 off-screen
- * buffer) at the point (x, y) using the specified RRRGGGBB colour.
+ * Draw a pixel on the specified layer 2 screen at the point (x, y) using the
+ * specified RRRGGGBB colour.
  */
 void layer2_draw_pixel(uint8_t x,
                        uint8_t y,
                        uint8_t color,
-                       off_screen_buffer_t *off_screen_buffer);
+                       layer2_screen_t *screen);
 
 /*
- * Draw a line on the layer 2 screen (or the specified layer 2 off-screen buffer)
- * between the points (x1, y1) and (x2, y2) using the specified RRRGGGBB colour.
+ * Draw a line on the specified layer 2 screen between the points (x1, y1) and
+ * (x2, y2) using the specified RRRGGGBB colour.
  */
 void layer2_draw_line(uint8_t x1,
                       uint8_t y1,
                       uint8_t x2,
                       uint8_t y2,
                       uint8_t color,
-                      off_screen_buffer_t *off_screen_buffer);
+                      layer2_screen_t *screen);
 
 /*
- * Draw a rectangle on the layer 2 screen (or the specified layer 2 off-screen
- * buffer) with the specified width and height using the specified RRRGGGBB
- * colour. The top-left corner of the rectangle is located at the point (x, y).
+ * Draw a rectangle on the specified layer 2 screen with the specified width
+ * and height using the specified RRRGGGBB colour. The top-left corner of the
+ * rectangle is located at the point (x, y).
  */
 void layer2_draw_rect(uint8_t x,
                       uint8_t y,
                       uint16_t width,
                       uint8_t height,
                       uint8_t color,
-                      off_screen_buffer_t *off_screen_buffer);
+                      layer2_screen_t *screen);
 
 /*
- * Draw a string of text on the layer 2 screen (or the specified layer 2 off-
- * screen buffer) at the specified row (0 - 23) and starting at the specified
- * column (0 - 31) using the specified RRRGGGBB colour. If the text doesn't fit
- * on the specified row, it is truncated at its end to fit the row.
+ * Draw a string of text on the specified layer 2 screen at the specified row
+ * (0 - 23) and starting at the specified column (0 - 31) using the specified
+ * RRRGGGBB colour. If the text doesn't fit on the specified row, it is
+ * truncated at its end to fit the row.
  *
  * The text is drawn using the font set with layer2_set_font(). By default, the
  * ZX Spectrum ROM font is used. Any non-printable character outside the range
@@ -395,7 +421,7 @@ void layer2_draw_text(uint8_t row,
                       uint8_t column,
                       const char *text,
                       uint8_t color,
-                      off_screen_buffer_t *off_screen_buffer);
+                      layer2_screen_t *screen);
 
 /*
  * Set the font to be used by layer2_draw_text(). If the specified font address
@@ -409,33 +435,33 @@ void layer2_draw_text(uint8_t row,
 void layer2_set_font(const void *new_font_address);
 
 /*
- * Fill a rectangle on the layer 2 screen (or the specified layer 2 off-screen
- * buffer) with the specified width and height using the specified RRRGGGBB
- * colour. The top-left corner of the rectangle is located at the point (x, y).
+ * Fill a rectangle on the specified layer 2 screen with the specified width
+ * and height using the specified RRRGGGBB colour. The top-left corner of the
+ * rectangle is located at the point (x, y).
  */
 void layer2_fill_rect(uint8_t x,
                       uint8_t y,
                       uint16_t width,
                       uint8_t height,
                       uint8_t color,
-                      off_screen_buffer_t *off_screen_buffer);
+                      layer2_screen_t *screen);
 
 /*
  * Blit a source rectangle of the specified width (1-256) and height (1-192)
- * containing linear RRRGGGBB pixels on the layer 2 screen (or the specified
- * layer 2 off-screen buffer) at the given X (0-255) and Y (0-191) coordinates.
+ * containing linear RRRGGGBB pixels on the specified layer 2 screen at the
+ * given X (0-255) and Y (0-191) coordinates.
  */
 void layer2_blit(uint8_t x,
                  uint8_t y,
                  const uint8_t *source,
                  uint16_t width,
                  uint8_t height,
-                 off_screen_buffer_t *off_screen_buffer);
+                 layer2_screen_t *screen);
 
 /*
  * Blit a source rectangle of the specified width (1-256) and height (1-192)
- * containing linear RRRGGGBB pixels on the layer 2 screen (or the specified
- * layer 2 off-screen buffer) at the given X (0-255) and Y (0-191) coordinates.
+ * containing linear RRRGGGBB pixels on the specified layer 2 screen at the
+ * given X (0-255) and Y (0-191) coordinates.
  *
  * Transparent pixels (i.e. pixels with the color 0xE3) in the source rectangle
  * are skipped.
@@ -451,25 +477,25 @@ void layer2_blit_transparent(uint8_t x,
                              const uint8_t *source,
                              uint16_t width,
                              uint8_t height,
-                             off_screen_buffer_t *off_screen_buffer);
+                             layer2_screen_t *screen);
 
 /*
  * Blit a row of pixels from the specified source layer 2 off-screen buffer at
- * the given source Y coordinate (0-191) to the layer 2 screen at the given
+ * the given source Y coordinate (0-191) to the main layer 2 screen at the given
  * destination Y coordinate (0-191).
  *
  * This is a specialized blit function optimized for blitting new rows in layer
  * 2 screen vertical scrolling.
  */
-void layer2_blit_off_screen_row(uint8_t dest_y, off_screen_buffer_t *source, uint8_t source_y);
+void layer2_blit_off_screen_row(uint8_t dest_y, layer2_screen_t *source, uint8_t source_y);
 
 /* Blit a column of pixels from the specified source layer 2 off-screen buffer
- * at the given source X coordinate (0-255) to the layer 2 screen at the given
- * destination X coordinate (0-255).
+ * at the given source X coordinate (0-255) to the main layer 2 screen at the
+ * given destination X coordinate (0-255).
  *
  * This is a specialized blit function optimized for blitting new columns in
  * layer 2 screen horizontal scrolling.
  */
-void layer2_blit_off_screen_column(uint8_t dest_x, off_screen_buffer_t *source, uint8_t source_x);
+void layer2_blit_off_screen_column(uint8_t dest_x, layer2_screen_t *source, uint8_t source_x);
 
 #endif
