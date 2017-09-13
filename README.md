@@ -17,7 +17,7 @@ ZEsarUX and CSpect emulators and when the layer 2 screen specification is
 finally published.
 
 This API has been tested and verified to work with the z88dk C compiler
-(2017-08-27 snapshot) and the ZEsarUX 5.1 (2017-07-24 snapshot) and CSpect 0.9
+(2017-08-27 snapshot) and the ZEsarUX 5.1 (2017-09-08 snapshot) and CSpect 0.9
 emulators. See the "Known Problems" section below for a list of known problems
 and workarounds.
 
@@ -92,7 +92,7 @@ without the need for setting up any include and library paths:
 **Tip:** To start the ZEsarUX emulator directly in Sinclair ZX Spectrum Next
 mode, start it with the following options:
 
-> zesarux --machine tbblue --enable-mmc --enable-divmmc-ports --mmc-file extras/media/disk_images/tbblue.mmc
+> zesarux --machine tbblue --enable-mmc --enable-divmmc-ports --mmc-file tbblue.mmc
     --enable-esxdos-handler --esxdos-root-dir extras/media/spectrum/esxdos_handler/0.8.6_TBBLUE --quickexit
 
 **Tip:** To start the CSpect emulator directly in Sinclair ZX Spectrum Next
