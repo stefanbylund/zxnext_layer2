@@ -2,13 +2,13 @@
 
 * Update README.md and zxnext_layer2.h header.
 
+* Add a layer2_flip_main_shadow_screen_ram_banks() function when reading registers 18/19 is supported by CSpect.
+
 * Draw/fill circle and ellipse.
 
 * Support blitting a sub-rectangle of the source rectangle?
 
 * Use something else than BANK_SYS_VAR?
-
-* Add support for layer 2 screen front/back buffer feature.
 
 * Add support for setting the two palettes containing 256 9-bit colour values.
 

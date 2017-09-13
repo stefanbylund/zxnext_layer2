@@ -147,6 +147,15 @@
 #define LAYER_PRIORITIES_U_L_S 0x5
 #endif
 
+/* Macro for determining if the given layer2_screen_t pointer is the main layer 2 screen. */
+#define IS_MAIN_SCREEN(screen) (((screen) == NULL) || ((screen)->screen_type == MAIN_SCREEN))
+
+/* Macro for determining if the given layer2_screen_t pointer is the shadow layer 2 screen. */
+#define IS_SHADOW_SCREEN(screen) (((screen) != NULL) && ((screen)->screen_type == SHADOW_SCREEN))
+
+/* Macro for determining if the given layer2_screen_t pointer is a layer 2 off-screen buffer. */
+#define IS_OFF_SCREEN(screen) (((screen) != NULL) && ((screen)->screen_type == OFF_SCREEN))
+
 /*
  * Macro for incrementing an Y coordinate (0-191) in a wrapping manner,
  * i.e. incrementing 191 yields 0.
