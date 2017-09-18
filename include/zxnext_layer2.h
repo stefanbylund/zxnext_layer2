@@ -19,10 +19,10 @@
  *
  * The layer 2 screen can either be located behind or in front of the Spectrum
  * ULA screen. If it is in front of the ULA screen, the ULA screen will show
- * through in those pixels of the layer 2 screen that have the layer 2
- * transparency colour. If the layer 2 screen is behind the ULA screen, the
- * layer 2 screen will show through in those pixels of the ULA screen that have
- * the ULA transparency colour.
+ * through in those pixels of the layer 2 screen that have the transparency
+ * colour. If the layer 2 screen is behind the ULA screen, the layer 2 screen
+ * will show through in those pixels of the ULA screen that have the transparency
+ * colour.
  *
  * Sidenote: The ULA screen in Sinclair ZX Spectrum Next supports four graphics
  * modes; standard Spectrum mode (256 * 192 pixels, 32 * 24 attributes, 16
@@ -30,26 +30,41 @@
  * colours), Timex high-resolution mode (512 * 192 pixels in 2 colours) and
  * low-resolution mode (128 * 96 double-sized pixels in 256 colours).
  *
- * The layer 2 screen resides in a dedicated memory that is not directly
- * accessible by the Z80 CPU. In order to manipulate the layer 2 screen, it has
- * to be paged in to the Z80's 64 KB memory space. Since it would be impractical
- * to page in the whole 48 KB layer 2 screen in its entirety, it is paged-in in
- * thirds. The layer 2 screen is divided in a top, middle and bottom section of
- * the size 256 * 64 pixels and one section is paged-in at a time to the first
- * 16 KB (0-16383) of the memory space where the Spectrum BASIC ROM normally
- * resides.
+ * There are actually two layer 2 screens: the main screen (also called the
+ * front buffer) and the shadow screen (also called the back buffer). Only the
+ * main screen is visible on the display. In order to manipulate the main/shadow
+ * screen, it has to be paged-in to the Z80's 64 KB memory space. Since it would
+ * be impractical to page-in the whole 48 KB layer 2 screen in its entirety, it
+ * is paged-in in thirds. The layer 2 screen is divided in a top, middle and
+ * bottom 16 KB section of the size 256 * 64 pixels and one section is paged-in
+ * at a time to the first 16 KB (0-16383) of the memory space where the Spectrum
+ * BASIC ROM normally resides. By default, the main layer 2 screen resides in
+ * the extended RAM banks 8, 9 and 10 and the shadow layer 2 screen in RAM banks
+ * 11, 12 and 13. Note that the layer 2 screen is paged-in in a special way and
+ * is only accessible for writing. If you read the paged-in screen memory, you
+ * will see the Spectrum BASIC ROM and not the layer 2 screen. However, it is
+ * possible to treat the main/shadow layer 2 screen as an off-screen buffer that
+ * is paged-in as any other RAM banks to the top 16 KB RAM (49152-65535) where
+ * it is both readable and writable. When the main screen is paged-in to the top
+ * 16 KB RAM instead of the bottom 16K, any writes to it are still directly
+ * displayed.
  *
- * Note: The layer 2 screen is paged-in in a special way and is only accessible
- * for writing. If you read the paged-in layer 2 screen memory, you will see the
- * Spectrum BASIC ROM and not the layer 2 screen.
+ * The main and shadow layer 2 screens can be flipped at anytime so that the
+ * shadow screen becomes the new main screen and the old main screen becomes the
+ * new shadow screen. This technique of having two screens where one is currently
+ * being displayed and the other is being updated in the background and then
+ * flipping them when the updates are complete is called double buffering or
+ * page flipping. Using double buffering and performing the flipping between the
+ * main and shadow screens in the vertical blanking interval avoids displaying
+ * any intermediate updates, stutter and tearing artefacts.
  *
- * This API provides a graphics library of functions for drawing on the layer 2
- * screen or on a layer 2 off-screen buffer. The drawing functions automatically
- * page in the screen/off-screen sections as necessary and take care of the
- * complications when a drawing operation covers more than one section. The
- * graphics library provides support for drawing pixels, lines, rectangles,
- * filled rectangles, text, loading of layer 2 screen files and various types of
- * blitting.
+ * This API provides a graphics library of functions for drawing on the
+ * main/shadow layer 2 screen or on a layer 2 off-screen buffer. The drawing
+ * functions automatically page in the screen/off-screen sections as necessary
+ * and take care of the complications when a drawing operation covers more than
+ * one section. The graphics library provides support for drawing pixels, lines,
+ * rectangles, filled rectangles, text, loading of layer 2 screen files and
+ * various types of blitting.
  *
  * Note: If you're drawing on a layer 2 off-screen buffer, the code to be
  * executed, the stack, the interrupt vector table and isr(s), and any required
