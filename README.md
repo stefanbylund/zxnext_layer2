@@ -233,7 +233,10 @@ how the hardware scrolling of the layer 2 screen is actually done.
 
 ## Known Problems
 
-Hardware scrolling of the layer 2 screen is currently not supported by ZEsarUX.
+Flipping between the main and shadow layer 2 screens doesn't work properly in
+ZEsarUX.
+
+Hardware vertical scrolling doesn't work properly in ZEsarUX.
 
 When using the ZEsarUX emulator, the layer2_draw_text() function, if using the
 Spectrum ROM font, only works if the TAP file is given as a command-line argument
