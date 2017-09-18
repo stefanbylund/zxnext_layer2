@@ -238,6 +238,12 @@ ZEsarUX.
 
 Hardware vertical scrolling doesn't work properly in ZEsarUX.
 
+Changing layer priorities between layer 2 and ULA screens doesn't work properly
+in ZEsarUX.
+
+Paging the main layer 2 screen to the top 16K RAM doesn't work properly in
+ZEsarUX.
+
 When using the ZEsarUX emulator, the layer2_draw_text() function, if using the
 Spectrum ROM font, only works if the TAP file is given as a command-line argument
 to ZEsarUX, not if loaded from its GUI. If layer2_draw_text() uses the Spectrum
