@@ -9,11 +9,11 @@
  * The Sinclair ZX Spectrum Next provides a new graphics mode called the layer 2
  * screen. The layer 2 screen is a 256 * 192 pixels screen with 256 colours where
  * each pixel is an 8-bit RRRGGGBB colour value. The pixels are laid out linearly
- * from left to right and top to bottom. The colour pink 0xE3 (227) represents
- * the transparency colour. The colour encoding is the same as for the colour
- * palette of the hardware sprites.
+ * from left to right and top to bottom. By default, the pink colour 0xE3 (227)
+ * represents the transparency colour. The colour encoding is the same as for
+ * the colour palette of the hardware sprites.
  *
- * Tip: If you're drawing your screens in a general-purpose paint program, it's
+ * Tip: If you're drawing your graphics in a general-purpose paint program, it's
  * good to know that the transparency colour 0xE3 corresponds to the 24-bit RGB
  * colour 0xE000C0 (224, 0, 192).
  *
@@ -37,17 +37,17 @@
  * be impractical to page-in the whole 48 KB layer 2 screen in its entirety, it
  * is paged-in in thirds. The layer 2 screen is divided in a top, middle and
  * bottom 16 KB section of the size 256 * 64 pixels and one section is paged-in
- * at a time to the first 16 KB (0-16383) of the memory space where the Spectrum
- * BASIC ROM normally resides. By default, the main layer 2 screen resides in
- * the extended RAM banks 8, 9 and 10 and the shadow layer 2 screen in RAM banks
- * 11, 12 and 13. Note that the layer 2 screen is paged-in in a special way and
- * is only accessible for writing. If you read the paged-in screen memory, you
- * will see the Spectrum BASIC ROM and not the layer 2 screen. However, it is
- * possible to treat the main/shadow layer 2 screen as an off-screen buffer that
- * is paged-in as any other RAM banks to the top 16 KB RAM (49152-65535) where
- * it is both readable and writable. When the main screen is paged-in to the top
- * 16 KB RAM instead of the bottom 16K, any writes to it are still directly
- * displayed.
+ * at a time to the first 16 KB (0 - 16383) of the memory space where the
+ * Spectrum BASIC ROM normally resides. By default, the main layer 2 screen
+ * resides in the extended RAM banks 8, 9 and 10 and the shadow layer 2 screen
+ * in RAM banks 11, 12 and 13. Note that the layer 2 screen is paged-in in a
+ * special way and is only accessible for writing. If you read the paged-in
+ * screen memory, you will see the Spectrum BASIC ROM and not the layer 2 screen.
+ * However, it is possible to treat the main/shadow layer 2 screen as an
+ * off-screen buffer that is paged-in as any other RAM banks to the top 16 KB
+ * RAM (49152 - 65535) where it is both readable and writable. When the main
+ * screen is paged-in to the top 16 KB RAM instead of the bottom 16K, any writes
+ * to it are still directly displayed.
  *
  * The main and shadow layer 2 screens can be flipped at anytime so that the
  * shadow screen becomes the new main screen and the old main screen becomes the
