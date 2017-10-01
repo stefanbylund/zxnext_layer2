@@ -36,6 +36,7 @@ src/layer2_blit.c \
 src/layer2_blit_transparent.c \
 src/layer2_blit_off_screen_row.c \
 src/layer2_blit_off_screen_column.c \
+src/layer2_blit_off_screen_sub_column.c \
 src/layer2_common.c
 
 LIBDIR_SCCZ80 := lib/sccz80

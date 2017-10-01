@@ -507,22 +507,52 @@ void layer2_blit_transparent(uint8_t x,
                              layer2_screen_t *screen);
 
 /*
- * Blit a row of pixels from the specified source layer 2 off-screen buffer at
- * the given source Y coordinate (0-191) to the main layer 2 screen at the given
- * destination Y coordinate (0-191).
+ * Blit a full row of pixels from the specified source layer 2 off-screen buffer
+ * at the given source Y coordinate (0-191) to the main layer 2 screen at the
+ * given destination Y coordinate (0-191).
  *
  * This is a specialized blit function optimized for blitting new rows in layer
  * 2 screen vertical scrolling.
  */
-void layer2_blit_off_screen_row(uint8_t dest_y, layer2_screen_t *source, uint8_t source_y);
+#define layer2_blit_off_screen_row(dest_y, source, source_y) \
+    layer2_blit_off_screen_sub_row(0, (dest_y), (source), 0, (source_y), 256)
 
-/* Blit a column of pixels from the specified source layer 2 off-screen buffer
- * at the given source X coordinate (0-255) to the main layer 2 screen at the
- * given destination X coordinate (0-255).
+/*
+ * Blit a sub-row of pixels of the given width from the specified source layer 2
+ * off-screen buffer at the given source Y coordinate (0-191) to the main layer
+ * 2 screen at the given destination Y coordinate (0-191).
+ *
+ * This is a specialized blit function optimized for blitting new sub-rows in
+ * the vertical part of layer 2 screen diagonal scrolling.
+ */
+void layer2_blit_off_screen_sub_row(uint8_t dest_x,
+                                    uint8_t dest_y,
+                                    layer2_screen_t *source,
+                                    uint8_t source_x,
+                                    uint8_t source_y,
+                                    uint16_t width);
+
+/* Blit a full column of pixels from the specified source layer 2 off-screen
+ * buffer at the given source X coordinate (0-255) to the main layer 2 screen
+ * at the given destination X coordinate (0-255).
  *
  * This is a specialized blit function optimized for blitting new columns in
  * layer 2 screen horizontal scrolling.
  */
 void layer2_blit_off_screen_column(uint8_t dest_x, layer2_screen_t *source, uint8_t source_x);
+
+/* Blit a sub-column of pixels of the given height from the specified source
+ * layer 2 off-screen buffer at the given source X coordinate (0-255) to the
+ * main layer 2 screen at the given destination X coordinate (0-255).
+ *
+ * This is a specialized blit function optimized for blitting new sub-columns in
+ * the horizontal part of layer 2 screen diagonal scrolling.
+ */
+void layer2_blit_off_screen_sub_column(uint8_t dest_x,
+                                       uint8_t dest_y,
+                                       layer2_screen_t *source,
+                                       uint8_t source_x,
+                                       uint8_t source_y,
+                                       uint8_t height);
 
 #endif
