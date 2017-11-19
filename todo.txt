@@ -1,3 +1,5 @@
+* Update documentation with respect to RGB332 pixels and palette.
+
 * Switch to zxn target in z88dk when stable.
 
 * Update README.md and zxnext_layer2.h header.
@@ -10,7 +12,13 @@
 
 * Use something else than BANK_SYS_VAR?
 
-* Add support for setting the two palettes containing 256 9-bit colour values.
+* Add support for layer 2 clip window.
+
+* Add support for raster line interrupts.
+
+* Add support for the Copper.
+
+* Use new MMU slot selection internally?
 
 * Improve performance of layer2_blit_transparent() function.
 

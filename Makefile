@@ -19,12 +19,16 @@ src/layer2_set_shadow_screen_ram_bank.c \
 src/layer2_get_shadow_screen_ram_bank.c \
 src/layer2_set_global_transparency_color.c \
 src/layer2_get_global_transparency_color.c \
+src/layer2_set_display_palette.c \
+src/layer2_set_rw_palette.c \
+src/layer2_set_palette.c \
 src/layer2_set_offset_x.c \
 src/layer2_get_offset_x.c \
 src/layer2_set_offset_y.c \
 src/layer2_get_offset_y.c \
 src/layer2_clear_screen.c \
 src/layer2_load_screen.c \
+src/layer2_load_palette.c \
 src/layer2_copy_off_screen.c \
 src/layer2_draw_pixel.c \
 src/layer2_draw_pixel_fast.c \

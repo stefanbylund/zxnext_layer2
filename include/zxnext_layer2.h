@@ -328,6 +328,28 @@ void layer2_set_global_transparency_color(uint8_t color);
 uint8_t layer2_get_global_transparency_color(void);
 
 /*
+ * Set the layer 2 display palette (first or second palette), i.e. the palette
+ * used when displaying the layer 2 screen. By default, the first palette is
+ * used.
+ */
+void layer2_set_display_palette(bool first_palette);
+
+/*
+ * Set the layer 2 read/write palette (first or second palette), i.e. the
+ * palette used when reading/writing the layer 2 palette colours.
+ */
+void layer2_set_rw_palette(bool first_palette);
+
+/*
+ * Set a range of RGB333 colours starting from the given palette index in the
+ * currently selected layer 2 read/write palette.
+ *
+ * The RGB333 colours are 16-bit values where the high byte holds the RGB332
+ * bits (RRRGGGBB) and the low byte the zero-extended lowest blue bit (0000000B).
+ */
+void layer2_set_palette(const uint16_t *colors, uint16_t length, uint8_t palette_index);
+
+/*
  * Offset the columns of the main layer 2 screen horizontally on the X axis in a
  * wrapping manner for the specified amount of pixels (0-255).
  *
@@ -384,13 +406,34 @@ uint8_t layer2_get_offset_y(void);
 void layer2_clear_screen(uint8_t color, layer2_screen_t *screen);
 
 /*
- * Load the specified layer 2 screen file (containing 256 * 192 RRRGGGBB pixels)
+ * Load the specified layer 2 screen file (containing 256 * 192 8-bit pixels)
  * using ESXDOS into the specified layer 2 screen memory.
+ *
+ * If the has_palette parameter is true, it is assumed that the layer 2 screen
+ * file is prepended with a 256-colour RGB333 palette (512 bytes long), which is
+ * loaded and whose colours are set in the currently selected layer 2 read/write
+ * palette. The RGB333 colours should be 16-bit values where the first byte
+ * holds the RGB332 bits (RRRGGGBB) and the second byte the zero-extended lowest
+ * blue bit (0000000B).
  *
  * If there is any error when loading the file, errno is set with the
  * corresponding ESXDOS error code.
  */
-void layer2_load_screen(const char *filename, layer2_screen_t *screen);
+void layer2_load_screen(const char *filename, layer2_screen_t *screen, bool has_palette);
+
+/*
+ * Load the specified layer 2 palette file (containing 256 RGB333 colours, 512
+ * bytes in size) using ESXDOS into the currently selected layer 2 read/write
+ * palette.
+ *
+ * The RGB333 colours should be 16-bit values where the first byte holds the
+ * RGB332 bits (RRRGGGBB) and the second byte the zero-extended lowest blue bit
+ * (0000000B).
+ *
+ * If there is any error when loading the file, errno is set with the
+ * corresponding ESXDOS error code.
+ */
+void layer2_load_palette(const char *filename);
 
 /*
  * Copy the specified layer 2 off-screen buffer to the main layer 2 screen.
