@@ -125,22 +125,33 @@ following command:
 ## Layer 2 Screen
 
 The Sinclair ZX Spectrum Next provides a new graphics mode called the layer 2
-screen. The layer 2 screen is a 256 * 192 pixels screen with 256 colours where
-each pixel is an 8-bit RRRGGGBB colour value. The pixels are laid out linearly
-from left to right and top to bottom. By default, the pink colour 0xE3 (227)
-represents the transparency colour. The colour encoding is the same as for
-the colour palette of the hardware sprites.
+screen. The layer 2 screen is a 256 * 192 pixels screen with 256 colours
+where each pixel is an 8-bit index between 0 and 255 into a 256-colour
+palette. The pixels are laid out linearly from left to right and top to
+bottom.
+
+The layer 2 palette consists of 256 9-bit RGB333 colour values, i.e. the
+total number of colours is 512. There are actually two layer 2 palettes,
+which one is currently used for diplaying the layer 2 screen can be selected
+at runtime. The colour encoding of the layer 2 palette is the same as for the
+palette of the ULA screen and hardware sprites.
+
+One colour is defined as the global transparency colour. This colour is an
+8-bit RGB332 colour value so the transparency is compared only with the 8
+most significant bits of the 9-bit RGB333 colours in the palette. This means
+that two of the 512 possible RGB333 colours will be transparent. By default,
+the global transparency colour is set to the pink colour 0xE3 (227).
 
 Tip: If you're drawing your graphics in a general-purpose paint program, it's
-good to know that the transparency colour 0xE3 corresponds to the 24-bit RGB
-colour 0xE000C0 (224, 0, 192).
+good to know that the default global transparency colour 0xE3 corresponds to
+the 24-bit RGB colour 0xE000C0 (224, 0, 192).
 
 The layer 2 screen can either be located behind or in front of the Spectrum
 ULA screen. If it is in front of the ULA screen, the ULA screen will show
-through in those pixels of the layer 2 screen that have the transparency
+through in those pixels of the layer 2 screen that match the transparency
 colour. If the layer 2 screen is behind the ULA screen, the layer 2 screen
-will show through in those pixels of the ULA screen that have the transparency
-colour.
+will show through in those pixels of the ULA screen that match the
+transparency colour.
 
 Sidenote: The ULA screen in Sinclair ZX Spectrum Next supports four graphics
 modes; standard Spectrum mode (256 * 192 pixels, 32 * 24 attributes, 16

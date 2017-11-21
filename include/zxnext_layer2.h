@@ -7,22 +7,33 @@
  * also provides a graphics library of drawing functions.
  *
  * The Sinclair ZX Spectrum Next provides a new graphics mode called the layer 2
- * screen. The layer 2 screen is a 256 * 192 pixels screen with 256 colours where
- * each pixel is an 8-bit RRRGGGBB colour value. The pixels are laid out linearly
- * from left to right and top to bottom. By default, the pink colour 0xE3 (227)
- * represents the transparency colour. The colour encoding is the same as for
- * the colour palette of the hardware sprites.
+ * screen. The layer 2 screen is a 256 * 192 pixels screen with 256 colours
+ * where each pixel is an 8-bit index between 0 and 255 into a 256-colour
+ * palette. The pixels are laid out linearly from left to right and top to
+ * bottom.
+ *
+ * The layer 2 palette consists of 256 9-bit RGB333 colour values, i.e. the
+ * total number of colours is 512. There are actually two layer 2 palettes,
+ * which one is currently used for diplaying the layer 2 screen can be selected
+ * at runtime. The colour encoding of the layer 2 palette is the same as for the
+ * palette of the ULA screen and hardware sprites.
+ *
+ * One colour is defined as the global transparency colour. This colour is an
+ * 8-bit RGB332 colour value so the transparency is compared only with the 8
+ * most significant bits of the 9-bit RGB333 colours in the palette. This means
+ * that two of the 512 possible RGB333 colours will be transparent. By default,
+ * the global transparency colour is set to the pink colour 0xE3 (227).
  *
  * Tip: If you're drawing your graphics in a general-purpose paint program, it's
- * good to know that the transparency colour 0xE3 corresponds to the 24-bit RGB
- * colour 0xE000C0 (224, 0, 192).
+ * good to know that the default global transparency colour 0xE3 corresponds to
+ * the 24-bit RGB colour 0xE000C0 (224, 0, 192).
  *
  * The layer 2 screen can either be located behind or in front of the Spectrum
  * ULA screen. If it is in front of the ULA screen, the ULA screen will show
- * through in those pixels of the layer 2 screen that have the transparency
+ * through in those pixels of the layer 2 screen that match the transparency
  * colour. If the layer 2 screen is behind the ULA screen, the layer 2 screen
- * will show through in those pixels of the ULA screen that have the transparency
- * colour.
+ * will show through in those pixels of the ULA screen that match the
+ * transparency colour.
  *
  * Sidenote: The ULA screen in Sinclair ZX Spectrum Next supports four graphics
  * modes; standard Spectrum mode (256 * 192 pixels, 32 * 24 attributes, 16
@@ -310,20 +321,20 @@ void layer2_set_shadow_screen_ram_bank(uint8_t bank);
 uint8_t layer2_get_shadow_screen_ram_bank(void);
 
 /*
- * Set the global RRRGGGBB colour used for transparency in the layer 2 screen
- * and ULA screen. The default transparency colour is 0xE3.
+ * Set the global RGB332 colour used for transparency in the layer 2 screen and
+ * ULA screen. The default transparency colour is 0xE3.
  *
  * The ULA screen will show through in those parts of the layer 2 screen where
- * the pixels have the specified transparency colour and vice versa.
+ * the pixels match the specified transparency colour and vice versa.
  */
 void layer2_set_global_transparency_color(uint8_t color);
 
 /*
- * Returns the global RRRGGGBB colour used for transparency in the layer 2
- * screen and ULA screen. The default transparency colour is 0xE3.
+ * Returns the global RGB332 colour used for transparency in the layer 2 screen
+ * and ULA screen. The default transparency colour is 0xE3.
  *
  * The ULA screen will show through in those parts of the layer 2 screen where
- * the pixels have the specified transparency colour and vice versa.
+ * the pixels match the specified transparency colour and vice versa.
  */
 uint8_t layer2_get_global_transparency_color(void);
 
@@ -401,7 +412,8 @@ uint8_t layer2_get_offset_y(void);
 // 2 off-screen buffer (paging in the screen / off-screen sections as necessary).
 
 /*
- * Clear the specified layer 2 screen using the specified RRRGGGBB colour.
+ * Clear the specified layer 2 screen using the colour of the specified palette
+ * index.
  */
 void layer2_clear_screen(uint8_t color, layer2_screen_t *screen);
 
@@ -442,7 +454,7 @@ void layer2_copy_off_screen(layer2_screen_t *off_screen_buffer);
 
 /*
  * Draw a pixel on the specified layer 2 screen at the point (x, y) using the
- * specified RRRGGGBB colour.
+ * colour of the specified palette index.
  */
 void layer2_draw_pixel(uint8_t x,
                        uint8_t y,
@@ -451,7 +463,7 @@ void layer2_draw_pixel(uint8_t x,
 
 /*
  * Draw a line on the specified layer 2 screen between the points (x1, y1) and
- * (x2, y2) using the specified RRRGGGBB colour.
+ * (x2, y2) using the colour of the specified palette index.
  */
 void layer2_draw_line(uint8_t x1,
                       uint8_t y1,
@@ -462,8 +474,8 @@ void layer2_draw_line(uint8_t x1,
 
 /*
  * Draw a rectangle on the specified layer 2 screen with the specified width
- * and height using the specified RRRGGGBB colour. The top-left corner of the
- * rectangle is located at the point (x, y).
+ * and height using the colour of the specified palette index. The top-left
+ * corner of the rectangle is located at the point (x, y).
  */
 void layer2_draw_rect(uint8_t x,
                       uint8_t y,
@@ -474,9 +486,9 @@ void layer2_draw_rect(uint8_t x,
 
 /*
  * Draw a string of text on the specified layer 2 screen at the specified row
- * (0 - 23) and starting at the specified column (0 - 31) using the specified
- * RRRGGGBB colour. If the text doesn't fit on the specified row, it is
- * truncated at its end to fit the row.
+ * (0 - 23) and starting at the specified column (0 - 31) using the colour of
+ * the specified palette index If the text doesn't fit on the specified row, it
+ * is truncated at its end to fit the row.
  *
  * The text is drawn using the font set with layer2_set_font(). By default, the
  * ZX Spectrum ROM font is used. Any non-printable character outside the range
@@ -506,8 +518,8 @@ void layer2_set_font(const void *new_font_address);
 
 /*
  * Fill a rectangle on the specified layer 2 screen with the specified width
- * and height using the specified RRRGGGBB colour. The top-left corner of the
- * rectangle is located at the point (x, y).
+ * and height using the colour of the specified palette index. The top-left
+ * corner of the rectangle is located at the point (x, y).
  */
 void layer2_fill_rect(uint8_t x,
                       uint8_t y,
@@ -518,8 +530,8 @@ void layer2_fill_rect(uint8_t x,
 
 /*
  * Blit a source rectangle of the specified width (1-256) and height (1-192)
- * containing linear RRRGGGBB pixels on the specified layer 2 screen at the
- * given X (0-255) and Y (0-191) coordinates.
+ * containing linear pixels on the specified layer 2 screen at the given X
+ * (0-255) and Y (0-191) coordinates.
  */
 void layer2_blit(uint8_t x,
                  uint8_t y,
@@ -530,17 +542,20 @@ void layer2_blit(uint8_t x,
 
 /*
  * Blit a source rectangle of the specified width (1-256) and height (1-192)
- * containing linear RRRGGGBB pixels on the specified layer 2 screen at the
- * given X (0-255) and Y (0-191) coordinates.
+ * containing linear pixels on the specified layer 2 screen at the given X
+ * (0-255) and Y (0-191) coordinates.
  *
- * Transparent pixels (i.e. pixels with the color 0xE3) in the source rectangle
- * are skipped.
+ * Transparent pixels (i.e. pixels matching the defined global transparency
+ * color) in the source rectangle are skipped.
  *
  * This blit function is useful for implementing software sprites.
  *
  * Note: In order to handle transparency, this function blits at pixel level
  * while layer2_blit() blits at line level; consequently
  * layer2_blit_transparent() is much slower than layer2_blit().
+ *
+ * Currently, this function only works correctly with the default palette and
+ * default global transparency colour.
  */
 void layer2_blit_transparent(uint8_t x,
                              uint8_t y,
