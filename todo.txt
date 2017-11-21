@@ -1,5 +1,3 @@
-* Update documentation with respect to RGB332 pixels and palette.
-
 * Switch to zxn target in z88dk when stable.
 
 * Update README.md and zxnext_layer2.h header.
@@ -21,5 +19,7 @@
 * Use new MMU slot selection internally?
 
 * Improve performance of layer2_blit_transparent() function.
+
+* Replace some of the small functions with macros.
 
 * Fix all FIXMEs.
