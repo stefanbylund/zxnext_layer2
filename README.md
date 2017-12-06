@@ -23,7 +23,7 @@ and workarounds.
 
 ## Download
 
-The latest version of this API can be downloaded [here](build/zxnext_layer2.zip).
+The latest version of this API can be downloaded **[here](build/zxnext_layer2.zip)**.
 This download contains the following header files and libraries:
 
 * zxnext_layer2/include/zxnext_layer2.h
