@@ -246,9 +246,9 @@ how the hardware scrolling of the layer 2 screen is actually done.
 
 Reading readable Next hardware registers is not supported by CSpect.
 
-Hardware vertical scrolling doesn't work properly in ZEsarUX.
+Setting the layer 2 palette is not supported by CSpect.
 
-The global transparency colour is not supported for the ULA screen in ZEsarUX.
+Hardware vertical scrolling doesn't work properly in ZEsarUX.
 
 Paging the main layer 2 screen to the top 16K RAM doesn't work in ZEsarUX.
 
