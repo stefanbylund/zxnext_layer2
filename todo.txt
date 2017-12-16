@@ -1,5 +1,7 @@
 * Switch to zxn target in z88dk when stable.
 
+* Page in ROM 3 instead of ROM 1 in layer2_draw_text().
+
 * Update README.md and zxnext_layer2.h header.
 
 * Add a layer2_flip_main_shadow_screen_ram_banks() function when reading registers 18/19 is supported by CSpect.
