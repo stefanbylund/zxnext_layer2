@@ -361,6 +361,12 @@ void layer2_set_rw_palette(bool first_palette);
 void layer2_set_palette(const uint16_t *colors, uint16_t length, uint8_t palette_index);
 
 /*
+ * Reset the currently selected layer 2 read/write palette to contain the
+ * default layer 2 palette colours.
+ */
+void layer2_reset_palette(void);
+
+/*
  * Offset the columns of the main layer 2 screen horizontally on the X axis in a
  * wrapping manner for the specified amount of pixels (0-255).
  *

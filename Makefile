@@ -22,6 +22,7 @@ src/layer2_get_global_transparency_color.c \
 src/layer2_set_display_palette.c \
 src/layer2_set_rw_palette.c \
 src/layer2_set_palette.c \
+src/layer2_reset_palette.c \
 src/layer2_set_offset_x.c \
 src/layer2_get_offset_x.c \
 src/layer2_set_offset_y.c \
