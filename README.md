@@ -135,6 +135,13 @@ which one is currently used for diplaying the layer 2 screen can be selected
 at runtime. The colour encoding of the layer 2 palette is the same as for the
 palette of the ULA screen and hardware sprites.
 
+At reset, the layer 2 palette is initialized with the RGB332 colours 0 to 255
+using a one-to-one mapping between palette indexes and palette colours, i.e.
+palette index 0 contains colour 0, palette index 1 contains colour 1, ...,
+palette index 255 contains colour 255. The effective palette colours will be
+9-bit RGB333 colours where the lower blue bit is an OR between bit 1 and bit
+0 in the 8-bit RGB332 colours.
+
 One colour is defined as the global transparency colour. This colour is an
 8-bit RGB332 colour value so the transparency is compared only with the 8
 most significant bits of the 9-bit RGB333 colours in the palette. This means
