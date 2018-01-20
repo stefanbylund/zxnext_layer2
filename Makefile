@@ -17,6 +17,7 @@ src/layer2_set_main_screen_ram_bank.c \
 src/layer2_get_main_screen_ram_bank.c \
 src/layer2_set_shadow_screen_ram_bank.c \
 src/layer2_get_shadow_screen_ram_bank.c \
+src/layer2_flip_main_shadow_screen.c \
 src/layer2_set_global_transparency_color.c \
 src/layer2_get_global_transparency_color.c \
 src/layer2_set_display_palette.c \

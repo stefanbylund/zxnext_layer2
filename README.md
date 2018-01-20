@@ -17,7 +17,7 @@ ZEsarUX and CSpect emulators and when the layer 2 screen specification is
 finally published.
 
 This API has been tested and verified to work with the z88dk C compiler
-(2017-12-11 snapshot) and the ZEsarUX 6.0 and CSpect 1.0 emulators. See the
+(2017-12-11 snapshot) and the ZEsarUX 6.0 and CSpect 1.7 emulators. See the
 "Known Problems" section below for a list of known problems and workarounds.
 
 ## Download
@@ -252,12 +252,10 @@ how the hardware scrolling of the layer 2 screen is actually done.
 
 Reading readable Next hardware registers is not supported by CSpect.
 
-Setting the layer 2 palette is not supported by CSpect.
-
 Hardware vertical scrolling doesn't work properly in ZEsarUX.
 
 Hardware scrolling and hardware sprite movement is a bit jerky in ZEsarUX 6.0
-compared to CSpect 1.0.
+compared to CSpect 1.7.
 
 Paging the main layer 2 screen to the top 16K RAM doesn't work in ZEsarUX.
 

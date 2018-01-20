@@ -328,6 +328,13 @@ void layer2_set_shadow_screen_ram_bank(uint8_t bank);
 uint8_t layer2_get_shadow_screen_ram_bank(void);
 
 /*
+ * Utility function for flipping the main and shadow layer 2 screen RAM banks,
+ * i.e. the old shadow screen becomes the new main screen (which is diplayed)
+ * and the old main screen becomes the new shadow screen.
+ */
+void layer2_flip_main_shadow_screen(void);
+
+/*
  * Set the global RGB332 colour used for transparency in the layer 2 screen and
  * ULA screen. The default transparency colour is 0xE3.
  *
