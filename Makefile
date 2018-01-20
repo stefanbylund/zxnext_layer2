@@ -56,15 +56,15 @@ all: all_sccz80 all_sdcc_ix all_sdcc_iy
 
 all_sccz80:
 	$(MKDIR) $(LIBDIR_SCCZ80)
-	zcc +zx -vn -O3 -x -clib=new $(DEBUG) -Iinclude $(SRCS) -o $(LIBDIR_SCCZ80)/zxnext_layer2
+	zcc +zxn -vn -O3 -x -clib=new $(DEBUG) -Iinclude $(SRCS) -o $(LIBDIR_SCCZ80)/zxnext_layer2
 
 all_sdcc_ix:
 	$(MKDIR) $(LIBDIR_SDCC_IX)
-	zcc +zx -vn -SO3 -x -clib=sdcc_ix $(DEBUG) --max-allocs-per-node200000 -Iinclude $(SRCS) -o $(LIBDIR_SDCC_IX)/zxnext_layer2
+	zcc +zxn -vn -SO3 -x -clib=sdcc_ix $(DEBUG) --max-allocs-per-node200000 -Iinclude $(SRCS) -o $(LIBDIR_SDCC_IX)/zxnext_layer2
 
 all_sdcc_iy:
 	$(MKDIR) $(LIBDIR_SDCC_IY)
-	zcc +zx -vn -SO3 -x -clib=sdcc_iy $(DEBUG) --max-allocs-per-node200000 -Iinclude $(SRCS) -o $(LIBDIR_SDCC_IY)/zxnext_layer2
+	zcc +zxn -vn -SO3 -x -clib=sdcc_iy $(DEBUG) --max-allocs-per-node200000 -Iinclude $(SRCS) -o $(LIBDIR_SDCC_IY)/zxnext_layer2
 
 debug_sccz80: DEBUG = $(DEBUGFLAGS)
 

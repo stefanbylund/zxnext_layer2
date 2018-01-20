@@ -1,5 +1,3 @@
-* Switch to zxn target in z88dk when stable.
-
 * Page in ROM 3 instead of ROM 1 in layer2_draw_text().
 
 * Update README.md and zxnext_layer2.h header.
