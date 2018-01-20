@@ -7,7 +7,7 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <errno.h>
-#include <arch/zx/esxdos.h>
+#include <arch/zxn/esxdos.h>
 
 #include "zxnext_layer2.h"
 #include "layer2_common.h"
