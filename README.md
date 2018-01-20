@@ -250,7 +250,7 @@ how the hardware scrolling of the layer 2 screen is actually done.
 
 ## Known Problems
 
-Reading readable Next hardware registers is not supported by CSpect.
+Using the second layer 2 palette does not work in CSpect.
 
 Hardware vertical scrolling doesn't work properly in ZEsarUX.
 
