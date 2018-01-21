@@ -261,14 +261,6 @@ compared to CSpect 1.7.
 
 Paging the main layer 2 screen to the top 16K RAM doesn't work in ZEsarUX.
 
-When using the ZEsarUX emulator, the layer2_draw_text() function, if using the
-Spectrum ROM font, only works if the TAP file is given as a command-line argument
-to ZEsarUX, not if loaded from its GUI. If layer2_draw_text() uses the Spectrum
-ROM font (which is the default), it pages in ROM bank 1 which contains the
-Spectrum ROM font. When the TAP file is loaded from the ZEsarUX GUI, the attempt
-to page in the Spectrum BASIC ROM to the bottom 16 KB fails for an unknown
-reason.
-
 ## License
 
 This software is licensed under the terms of the MIT license.
