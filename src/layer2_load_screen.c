@@ -23,6 +23,7 @@ static uint8_t mmu_default_page(uint8_t mmu_slot);
 void layer2_load_screen(const char *filename, layer2_screen_t *screen, uint8_t mmu_slot, bool has_palette)
 {
     uint8_t filehandle;
+    uint8_t old_page;
     uint8_t screen_pages[6];
     void *screen_address;
     uint8_t i;
@@ -61,6 +62,8 @@ void layer2_load_screen(const char *filename, layer2_screen_t *screen, uint8_t m
 
     // Load layer 2 screen in 8 KB chunks using the given MMU slot.
 
+    // FIXME: Read and save current page when supported by CSpect.
+    old_page = mmu_default_page(mmu_slot);
     get_screen_pages(screen, screen_pages);
     screen_address = (void *) mmu_address(mmu_slot);
 
@@ -74,8 +77,7 @@ void layer2_load_screen(const char *filename, layer2_screen_t *screen, uint8_t m
         }
     }
 
-    // FIXME: Restore original page when supported by CSpect.
-    ZXN_WRITE_REG(REG_MMU0 + mmu_slot, mmu_default_page(mmu_slot));
+    ZXN_WRITE_REG(REG_MMU0 + mmu_slot, old_page);
 
 end:
     esxdos_f_close(filehandle);
