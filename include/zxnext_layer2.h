@@ -448,10 +448,14 @@ void layer2_clear_screen(uint8_t color, layer2_screen_t *screen);
  * holds the RGB332 bits (RRRGGGBB) and the second byte the zero-extended lowest
  * blue bit (0000000B).
  *
+ * The mmu_slot parameter specifies which 8 KB MMU slot (2 - 7) should be
+ * temporarily used when loading the layer 2 screen file. The layer 2 write-only
+ * paging area at the bottom 16 KB cannot be used when using ESXDOS.
+ *
  * If there is any error when loading the file, errno is set with the
  * corresponding ESXDOS error code.
  */
-void layer2_load_screen(const char *filename, layer2_screen_t *screen, bool has_palette);
+void layer2_load_screen(const char *filename, layer2_screen_t *screen, uint8_t mmu_slot, bool has_palette);
 
 /*
  * Load the specified layer 2 palette file (containing 256 RGB333 colours, 512
