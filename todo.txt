@@ -1,3 +1,5 @@
+* Change layer2_screen_t to only point out the top bank and have the other banks follow implicitly?
+
 * Page in ROM 3 instead of ROM 1 in layer2_draw_text().
 
 * Update README.md and zxnext_layer2.h header.
