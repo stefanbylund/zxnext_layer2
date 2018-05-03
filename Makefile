@@ -9,6 +9,8 @@ MKDIR := mkdir -p
 
 RM := rm -rf
 
+CP := cp -r
+
 ZIP := zip -r -q
 
 SRCS := src/layer2_configure.c \
@@ -80,8 +82,20 @@ debug_sdcc_ix: all_sdcc_ix
 debug_sdcc_iy: all_sdcc_iy
 
 distro:
+	# Create general distro
 	$(RM) build/zxnext_layer2.zip
 	cd ..; $(ZIP) zxnext_layer2/build/zxnext_layer2.zip zxnext_layer2/include zxnext_layer2/lib
+	# Create distro for z88dk-lib tool
+	$(RM) tmp
+	$(MKDIR) tmp/zxnext_layer2/zxn/include/newlib
+	$(MKDIR) tmp/zxnext_layer2/zxn/lib/newlib
+	$(CP) include/* tmp/zxnext_layer2/zxn/include/newlib
+	$(CP) lib/sccz80 tmp/zxnext_layer2/zxn/lib/newlib
+	$(CP) lib/sdcc_ix tmp/zxnext_layer2/zxn/lib/newlib
+	$(CP) lib/sdcc_iy tmp/zxnext_layer2/zxn/lib/newlib
+	$(RM) build/zxnext_layer2_z88dk.zip
+	cd tmp; $(ZIP) ../build/zxnext_layer2_z88dk.zip zxnext_layer2
+	$(RM) tmp
 
 clean:
-	$(RM) lib zcc_opt.def zcc_proj.lst src/*.lis
+	$(RM) lib tmp zcc_opt.def zcc_proj.lst src/*.lis
