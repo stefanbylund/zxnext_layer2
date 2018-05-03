@@ -11,6 +11,8 @@
 #include "layer2_defs.h"
 #include "layer2_common.h"
 
+#define ROM_FONT_ADDRESS 0x3D00
+
 static void layer2_draw_char(uint8_t x,
                              uint8_t y,
                              char ch,

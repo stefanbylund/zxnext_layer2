@@ -4,13 +4,13 @@
  * Implementation of layer2_set_main_screen_ram_bank() in zxnext_layer2.h.
  ******************************************************************************/
 
+#include <arch/zxn.h>
 #include <stdint.h>
 
 #include "zxnext_layer2.h"
-#include "layer2_defs.h"
 
 void layer2_set_main_screen_ram_bank(uint8_t bank)
 {
-    IO_REGISTER_NUMBER_PORT = LAYER2_RAM_PAGE_REGISTER;
-    IO_REGISTER_VALUE_PORT = bank;
+    IO_NEXTREG_REG = REG_LAYER_2_RAM_PAGE;
+    IO_NEXTREG_DAT = bank;
 }

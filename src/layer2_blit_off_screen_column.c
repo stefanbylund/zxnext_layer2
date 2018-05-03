@@ -4,13 +4,13 @@
  * Implementation of layer2_blit_off_screen_column() in zxnext_layer2.h.
  ******************************************************************************/
 
+#include <arch/zxn.h>
 #include <z80.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <stdbool.h>
 
 #include "zxnext_layer2.h"
-#include "layer2_defs.h"
 #include "layer2_common.h"
 
 static void layer2_blit_off_screen_column_section(uint8_t dest_x, uint8_t source_x);
@@ -22,7 +22,7 @@ void layer2_blit_off_screen_column(uint8_t dest_x, layer2_screen_t *source, uint
         return;
     }
 
-    source->tmp = z80_bpeek(BANK_SYS_VAR);
+    source->tmp = z80_bpeek(__SYSVAR_BANKM);
 
     // top
     layer2_configure(true, true, false, LAYER2_SCREEN_TOP);

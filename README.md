@@ -17,16 +17,15 @@ ZEsarUX and CSpect emulators and when the layer 2 screen specification is
 finally published.
 
 This API has been tested and verified to work with the z88dk C compiler
-(2017-12-11 snapshot) and the ZEsarUX 6.1 and CSpect 1.9 emulators. See the
+(2018-04-18 snapshot) and the ZEsarUX 6.1 and CSpect 1.10 emulators. See the
 "Known Problems" section below for a list of known problems and workarounds.
 
 ## Download
 
 The latest version of this API can be downloaded **[here](build/zxnext_layer2.zip)**.
-This download contains the following header files and libraries:
+This download contains the following header file and libraries:
 
 * zxnext_layer2/include/zxnext_layer2.h
-* zxnext_layer2/include/zxnext_registers.h
 * zxnext_layer2/lib/sccz80/zxnext_layer2.lib
 * zxnext_layer2/lib/sdcc_ix/zxnext_layer2.lib
 * zxnext_layer2/lib/sdcc_iy/zxnext_layer2.lib
@@ -36,10 +35,9 @@ section below.
 
 ## API Documentation
 
-The zxnext_layer2 API is documented in the following header files:
+The zxnext_layer2 API is documented in the following header file:
 
 * [zxnext_layer2.h](include/zxnext_layer2.h)
-* [zxnext_registers.h](include/zxnext_registers.h)
 
 ## How to Use
 
@@ -78,7 +76,7 @@ performance, use the SDCC compiler with the sdcc_iy C runtime library. However,
 the SCCZ80 compiler still has it use during development since it compiles much
 faster than the SDCC compiler.
 
-**Tip:** If you copy the zxnext_layer2 header files and libraries into the
+**Tip:** If you copy the zxnext_layer2 header file and libraries into the
 following directories in z88dk, the z88dk compiler will automatically find them
 without the need for setting up any include and library paths:
 
@@ -256,7 +254,7 @@ Using the second layer 2 palette does not work in CSpect.
 
 Hardware vertical scrolling doesn't work properly in ZEsarUX.
 
-Hardware scrolling is a bit jerky in ZEsarUX 6.1 compared to CSpect 1.9.
+Hardware scrolling is a bit jerky in ZEsarUX 6.1 compared to CSpect 1.10.
 
 Paging the main layer 2 screen to the top 16K RAM doesn't work in ZEsarUX.
 

@@ -4,13 +4,13 @@
  * Implementation of layer2_copy_off_screen() in zxnext_layer2.h.
  ******************************************************************************/
 
+#include <arch/zxn.h>
 #include <z80.h>
 #include <stddef.h>
 #include <stdbool.h>
 #include <string.h>
 
 #include "zxnext_layer2.h"
-#include "layer2_defs.h"
 #include "layer2_common.h"
 
 void layer2_copy_off_screen(layer2_screen_t *off_screen_buffer)
@@ -20,7 +20,7 @@ void layer2_copy_off_screen(layer2_screen_t *off_screen_buffer)
         return;
     }
 
-    off_screen_buffer->tmp = z80_bpeek(BANK_SYS_VAR);
+    off_screen_buffer->tmp = z80_bpeek(__SYSVAR_BANKM);
 
     layer2_configure(true, true, false, LAYER2_SCREEN_TOP);
     switch_ram_bank(off_screen_buffer->top_bank);

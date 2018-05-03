@@ -4,12 +4,12 @@
  * Implementation of layer2_load_screen() in zxnext_layer2.h.
  ******************************************************************************/
 
+#include <arch/zxn.h>
+#include <arch/zxn/esxdos.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <stdbool.h>
 #include <errno.h>
-#include <arch/zxn.h>
-#include <arch/zxn/esxdos.h>
 
 #include "zxnext_layer2.h"
 #include "layer2_common.h"

@@ -8,8 +8,6 @@
 
 * Support blitting a sub-rectangle of the source rectangle?
 
-* Use something else than BANK_SYS_VAR?
-
 * Add support for layer 2 clip window.
 
 * Add support for raster line interrupts.

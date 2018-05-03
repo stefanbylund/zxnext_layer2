@@ -5,6 +5,7 @@
  * layer2_blit_off_screen_sub_row() in zxnext_layer2.h.
  ******************************************************************************/
 
+#include <arch/zxn.h>
 #include <z80.h>
 #include <stddef.h>
 #include <stdint.h>
@@ -12,7 +13,6 @@
 #include <string.h>
 
 #include "zxnext_layer2.h"
-#include "layer2_defs.h"
 #include "layer2_common.h"
 
 void layer2_blit_off_screen_sub_row(uint8_t dest_x,
@@ -59,7 +59,7 @@ void layer2_blit_off_screen_sub_row(uint8_t dest_x,
         dest_y -= 128;
     }
 
-    source->tmp = z80_bpeek(BANK_SYS_VAR);
+    source->tmp = z80_bpeek(__SYSVAR_BANKM);
 
     if (source_y < 64)
     {

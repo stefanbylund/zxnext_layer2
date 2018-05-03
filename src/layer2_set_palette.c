@@ -4,10 +4,10 @@
  * Implementation of layer2_set_palette() in zxnext_layer2.h.
  ******************************************************************************/
 
+#include <arch/zxn.h>
 #include <stdint.h>
 
 #include "zxnext_layer2.h"
-#include "layer2_defs.h"
 
 void layer2_set_palette(const uint16_t *colors, uint16_t length, uint8_t palette_index)
 {
@@ -24,12 +24,12 @@ void layer2_set_palette(const uint16_t *colors, uint16_t length, uint8_t palette
         length = 256 - palette_index;
     }
 
-    IO_REGISTER_NUMBER_PORT = PALETTE_INDEX_REGISTER;
-    IO_REGISTER_VALUE_PORT = palette_index;
+    IO_NEXTREG_REG = REG_PALETTE_INDEX;
+    IO_NEXTREG_DAT = palette_index;
 
-    IO_REGISTER_NUMBER_PORT = PALETTE_VALUE_9BIT_REGISTER;
+    IO_NEXTREG_REG = REG_PALETTE_VALUE_16;
     for (i = 0; i < (length << 1); i++)
     {
-        IO_REGISTER_VALUE_PORT = color_bytes[i];
+        IO_NEXTREG_DAT = color_bytes[i];
     }
 }
