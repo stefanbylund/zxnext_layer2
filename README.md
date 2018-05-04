@@ -60,7 +60,7 @@ the [ZEsarUX](https://sourceforge.net/projects/zesarux/) or
 [CSpect](https://dailly.blogspot.se/) emulator.
 
 4. Read about how the layer 2 screen work in the "Layer 2 Screen" section below
-or in the official specification at http://www.specnext.com/FIXME/.
+or in the official specification at https://www.specnext.com/tbblue-io-port-system/.
 
 5. Familiarize yourself with the zxnext_layer2.h API.
 
