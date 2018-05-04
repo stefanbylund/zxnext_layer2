@@ -1,7 +1,7 @@
 # C Layer 2 Graphics Library for Sinclair ZX Spectrum Next
 
 The **zxnext_layer2** project provides a C API for using the layer 2 screen of
-the Sinclair ZX Spectrum Next as specified at http://www.specnext.com/FIXME/.
+the Sinclair ZX Spectrum Next as specified at https://www.specnext.com/tbblue-io-port-system/.
 This API is a thin C wrapper on top of the I/O port interface of the layer 2
 screen system. In addition, this C API also provides a graphics library of
 drawing functions.
@@ -22,13 +22,21 @@ This API has been tested and verified to work with the z88dk C compiler
 
 ## Download
 
-The latest version of this API can be downloaded **[here](build/zxnext_layer2.zip)**.
-This download contains the following header file and libraries:
+The latest version of this API can be downloaded here:
+
+* [zxnext_layer2.zip](build/zxnext_layer2.zip)
+* [zxnext_layer2_z88dk.zip](build/zxnext_layer2_z88dk.zip)
+
+The zxnext_layer2.zip archive contains the following header file and libraries:
 
 * zxnext_layer2/include/zxnext_layer2.h
 * zxnext_layer2/lib/sccz80/zxnext_layer2.lib
 * zxnext_layer2/lib/sdcc_ix/zxnext_layer2.lib
 * zxnext_layer2/lib/sdcc_iy/zxnext_layer2.lib
+
+The zxnext_layer2_z88dk.zip archive contains a packaging of zxnext_layer2 that
+can be installed directly into your z88dk installation for convenience, see the
+tip below.
 
 If you want to build the zxnext_layer2 libraries yourself, see the "How to Build"
 section below.
@@ -43,6 +51,9 @@ The zxnext_layer2 API is documented in the following header file:
 
 1. Download [zxnext_layer2.zip](build/zxnext_layer2.zip) and unpack it in a
 suitable place. It contains the files listed in the "Download" section above.
+For convenience, you can instead download
+[zxnext_layer2_z88dk.zip](build/zxnext_layer2_z88dk.zip) and install it into
+your z88dk installation, see the tip below.
 
 2. Install the latest version of [z88dk](https://github.com/z88dk/z88dk) and
 the [ZEsarUX](https://sourceforge.net/projects/zesarux/) or
@@ -67,24 +78,30 @@ version of z88dk and ZEsarUX or CSpect.
 **Tip:** See the [zxnext_layer2_demo](https://github.com/stefanbylund/zxnext_layer2_demo)
 project for an example of how to use zxnext_layer2.h and link with zxnext_layer2.lib.
 
+**Tip:** You can install zxnext_layer2 into your z88dk installation by using
+its third-party library installer z88dk-lib. Unpack the zxnext_layer2_z88dk.zip
+archive in a temporary directory, go to this directory (where the unpacked
+zxnext_layer2 subdirectory is located) and enter the following command:
+
+> z88dk-lib +zxn -f zxnext_layer2
+
+The -f option will make z88dk-lib overwrite any existing files without
+confirmation (e.g. if you update zxnext_layer2 it will replace the older version).
+Run z88dk-lib without any arguments to see a list of all its options.
+
+The z88dk compiler will now automatically find the zxnext_layer2 header file and
+library without the need for setting up any include and library paths. The
+zxnext_layer2.h header file is now included with **#include <lib/zxn/zxnext_layer2.h>**
+and the zxnext_layer2.lib library is linked against using **-llib/zxn/zxnext_layer2**.
+
 **Tip:** There are two C compilers in z88dk; the SDCC compiler and the SCCZ80
 compiler. I recommend to use the SDCC compiler since it generates more optimised
 code than the SCCZ80 compiler. There are two versions of the C runtime library
 for the SDCC compiler; one called sdcc_ix and another called sdcc_iy. From my
 experience, sdcc_iy is the more stable version. In summary, for optimal
 performance, use the SDCC compiler with the sdcc_iy C runtime library. However,
-the SCCZ80 compiler still has it use during development since it compiles much
+the SCCZ80 compiler still has its use during development since it compiles much
 faster than the SDCC compiler.
-
-**Tip:** If you copy the zxnext_layer2 header file and libraries into the
-following directories in z88dk, the z88dk compiler will automatically find them
-without the need for setting up any include and library paths:
-
-* z88dk/include/_DEVELOPMENT/sccz80/
-* z88dk/include/_DEVELOPMENT/sdcc/
-* z88dk/libsrc/_DEVELOPMENT/lib/sccz80/
-* z88dk/libsrc/_DEVELOPMENT/lib/sdcc_ix/
-* z88dk/libsrc/_DEVELOPMENT/lib/sdcc_iy/
 
 **Tip:** To start the ZEsarUX emulator directly in Sinclair ZX Spectrum Next
 mode, start it with the following options:
