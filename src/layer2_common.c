@@ -85,14 +85,12 @@ void end_switch_screen(layer2_screen_t *screen)
 
 void switch_ram_bank(uint8_t bank)
 {
-    uint8_t old_value = z80_bpeek(__SYSVAR_BANKM);
-    uint8_t new_value = (old_value & 0xF8) | (bank & 0x07);
-    uint8_t ext_value = (bank & 0x38) >> 3;
+    uint8_t page = bank << 1;
 
     intrinsic_di();
-    z80_bpoke(__SYSVAR_BANKM, new_value);
-    IO_7FFD = new_value;
-    IO_DFFD = ext_value;
+    z80_bpoke(__SYSVAR_BANKM, ((z80_bpeek(__SYSVAR_BANKM) & 0xF8) | (bank & 0x07)));
+    ZXN_WRITE_MMU6(page);
+    ZXN_WRITE_MMU7(page + 1);
     intrinsic_ei();
 }
 
