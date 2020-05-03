@@ -11,14 +11,8 @@ project contains an example program demonstrating how to use this API.
 
 ## Disclaimer
 
-This API is a work in progress and will be continuously updated as more
-information about the layer 2 screen is made known and implemented by the
-ZEsarUX and CSpect emulators and when the layer 2 screen specification is
-finally published.
-
-This API has been tested and verified to work with the z88dk C compiler
-(2018-04-18 snapshot) and the ZEsarUX 6.1 and CSpect 1.10 emulators. See the
-"Known Problems" section below for a list of known problems and workarounds.
+This project still works but is a bit out-of-date. It will be updated someday
+when I have the time ;)
 
 ## Download
 
@@ -56,7 +50,7 @@ For convenience, you can instead download
 your z88dk installation, see the tip below.
 
 2. Install the latest version of [z88dk](https://github.com/z88dk/z88dk) and
-the [ZEsarUX](https://sourceforge.net/projects/zesarux/) or
+the [ZEsarUX](https://github.com/chernandezba/zesarux) or
 [CSpect](https://dailly.blogspot.se/) emulator.
 
 4. Read about how the layer 2 screen work in the "Layer 2 Screen" section below
@@ -70,10 +64,6 @@ or in the official specification at https://www.specnext.com/tbblue-io-port-syst
 zxnext_layer2.lib.
 
 8. Run your program in the ZEsarUX or CSpect emulator.
-
-**Note:** Since the Sinclair ZX Spectrum Next is still under development and all
-tools need to catch up with the latest specs, it is important to use the latest
-version of z88dk and ZEsarUX or CSpect.
 
 **Tip:** See the [zxnext_layer2_demo](https://github.com/stefanbylund/zxnext_layer2_demo)
 project for an example of how to use zxnext_layer2.h and link with zxnext_layer2.lib.
@@ -106,13 +96,14 @@ faster than the SDCC compiler.
 **Tip:** To start the ZEsarUX emulator directly in Sinclair ZX Spectrum Next
 mode, start it with the following options:
 
-> zesarux --machine tbblue --enable-mmc --enable-divmmc-ports --mmc-file tbblue.mmc
-    --enable-esxdos-handler --esxdos-root-dir extras/media/spectrum/esxdos_handler/0.8.6_TBBLUE --quickexit
+> zesarux --noconfigfile --machine tbblue --enabletimexvideo --tbblue-fast-boot-mode
+  --quickexit --enable-esxdos-handler --esxdos-root-dir <virtual_mmc_root_folder>
+  \<program\>.nex
 
 **Tip:** To start the CSpect emulator directly in Sinclair ZX Spectrum Next
 mode, start it with the following options:
 
-> CSpect -zxnext -mmc=<virtual_mmc_root_folder> <my_program>.sna
+> CSpect -w2 -tv -zxnext -mmc=<virtual_mmc_root_folder>/ \<my_program\>.nex
 
 ## How to Build
 
@@ -265,15 +256,7 @@ how the hardware scrolling of the layer 2 screen is actually done.
 
 ## Known Problems
 
-The default layer 2 palette colours are not correct in neither CSpect nor ZEsarUX.
-
-Using the second layer 2 palette does not work in CSpect.
-
-Hardware vertical scrolling doesn't work properly in ZEsarUX.
-
-Hardware scrolling is a bit jerky in ZEsarUX 6.1 compared to CSpect 1.10.
-
-Paging the main layer 2 screen to the top 16K RAM doesn't work in ZEsarUX.
+Hardware scrolling is a bit jerky in ZEsarUX compared to CSpect.
 
 ## License
 
