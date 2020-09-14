@@ -61,11 +61,9 @@ void layer2_load_screen(const char *filename, layer2_screen_t *screen, uint8_t m
     }
 
     // Load layer 2 screen in 8 KB chunks using the given MMU slot.
-
-    // FIXME: Read and save current page when supported by CSpect.
-    old_page = mmu_default_page(mmu_slot);
+    old_page = ZXN_READ_REG(REG_MMU0 + mmu_slot);
     get_screen_pages(screen, screen_pages);
-    screen_address = (void *) mmu_address(mmu_slot);
+    screen_address = (void *) zxn_addr_from_mmu(mmu_slot);
 
     for (i = 0; i < 6; i++)
     {
@@ -108,57 +106,5 @@ static void get_screen_pages(layer2_screen_t *screen, uint8_t *pages)
         pages[3] = pages[2] + 1;
         pages[4] = screen->bottom_bank << 1;
         pages[5] = pages[4] + 1;
-    }
-}
-
-// FIXME: Remove when zxn_addr_from_mmu() works in z88dk.
-static uint16_t mmu_address(uint8_t mmu_slot)
-{
-    switch (mmu_slot)
-    {
-        case 0:
-            return 0;
-        case 1:
-            return 0x2000;
-        case 2:
-            return 0x4000;
-        case 3:
-            return 0x6000;
-        case 4:
-            return 0x8000;
-        case 5:
-            return 0xA000;
-        case 6:
-            return 0xC000;
-        case 7:
-            return 0xE000;
-        default:
-            return 0;
-    }
-}
-
-// FIXME: Remove when CSpect supports reading MMU slot registers.
-static uint8_t mmu_default_page(uint8_t mmu_slot)
-{
-    switch (mmu_slot)
-    {
-        case 0:
-            return 255;
-        case 1:
-            return 255;
-        case 2:
-            return 10;
-        case 3:
-            return 11;
-        case 4:
-            return 4;
-        case 5:
-            return 5;
-        case 6:
-            return 0;
-        case 7:
-            return 1;
-        default:
-            return 0;
     }
 }
