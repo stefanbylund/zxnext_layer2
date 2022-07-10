@@ -16,10 +16,6 @@
 
 static void get_screen_pages(layer2_screen_t *screen, uint8_t *pages);
 
-static uint16_t mmu_address(uint8_t mmu_slot);
-
-static uint8_t mmu_default_page(uint8_t mmu_slot);
-
 void layer2_load_screen(const char *filename, layer2_screen_t *screen, uint8_t mmu_slot, bool has_palette)
 {
     uint8_t filehandle;
@@ -61,9 +57,10 @@ void layer2_load_screen(const char *filename, layer2_screen_t *screen, uint8_t m
     }
 
     // Load layer 2 screen in 8 KB chunks using the given MMU slot.
+
     old_page = ZXN_READ_REG(REG_MMU0 + mmu_slot);
     get_screen_pages(screen, screen_pages);
-    screen_address = (void *) zxn_addr_from_mmu(mmu_slot);
+    screen_address = zxn_addr_from_mmu(mmu_slot);
 
     for (i = 0; i < 6; i++)
     {
