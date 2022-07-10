@@ -1,13 +1,13 @@
-# C Layer 2 Graphics Library for Sinclair ZX Spectrum Next
+# C Layer 2 Graphics Library for Spectrum Next
 
 The **zxnext_layer2** project provides a C API for using the layer 2 screen of
-the Sinclair ZX Spectrum Next as specified at https://www.specnext.com/tbblue-io-port-system/.
+the ZX Spectrum Next as specified at https://www.specnext.com/tbblue-io-port-system/.
 This API is a thin C wrapper on top of the I/O port interface of the layer 2
 screen system. In addition, this C API also provides a graphics library of
 drawing functions.
 
-The [zxnext_layer2_demo](https://github.com/stefanbylund/zxnext_layer2_demo)
-project contains an example program demonstrating how to use this API.
+The [demo](demo) folder contains example programs demonstrating how to use this
+API.
 
 ## Disclaimer
 
@@ -65,8 +65,8 @@ zxnext_layer2.lib.
 
 8. Run your program in the ZEsarUX or CSpect emulator.
 
-**Tip:** See the [zxnext_layer2_demo](https://github.com/stefanbylund/zxnext_layer2_demo)
-project for an example of how to use zxnext_layer2.h and link with zxnext_layer2.lib.
+**Tip:** See the [demo](demo) folder for examples of how to use
+zxnext_layer2.h and link with zxnext_layer2.lib.
 
 **Tip:** You can install zxnext_layer2 into your z88dk installation by using
 its third-party library installer z88dk-lib. Unpack the zxnext_layer2_z88dk.zip
@@ -93,15 +93,15 @@ performance, use the SDCC compiler with the sdcc_iy C runtime library. However,
 the SCCZ80 compiler still has its use during development since it compiles much
 faster than the SDCC compiler.
 
-**Tip:** To start the ZEsarUX emulator directly in Sinclair ZX Spectrum Next
-mode, start it with the following options:
+**Tip:** To start the ZEsarUX emulator directly in Spectrum Next mode, start it
+with the following options:
 
 > zesarux --noconfigfile --machine tbblue --enabletimexvideo --tbblue-fast-boot-mode
   --quickexit --enable-esxdos-handler --esxdos-root-dir <virtual_mmc_root_folder>
   \<program\>.nex
 
-**Tip:** To start the CSpect emulator directly in Sinclair ZX Spectrum Next
-mode, start it with the following options:
+**Tip:** To start the CSpect emulator directly in Spectrum Next mode, start it
+with the following options:
 
 > CSpect -w2 -tv -zxnext -mmc=<virtual_mmc_root_folder>/ \<my_program\>.nex
 
@@ -129,11 +129,10 @@ following command:
 
 ## Layer 2 Screen
 
-The Sinclair ZX Spectrum Next provides a new graphics mode called the layer 2
-screen. The layer 2 screen is a 256 * 192 pixels screen with 256 colours
-where each pixel is an 8-bit index between 0 and 255 into a 256-colour
-palette. The pixels are laid out linearly from left to right and top to
-bottom.
+The Spectrum Next provides a new graphics mode called the layer 2 screen.
+The layer 2 screen is a 256 * 192 pixels screen with 256 colours where each
+pixel is an 8-bit index between 0 and 255 into a 256-colour palette.
+The pixels are laid out linearly from left to right and top to bottom.
 
 The layer 2 palette consists of 256 9-bit RGB333 colour values, i.e. the
 total number of colours is 512. There are actually two layer 2 palettes,
@@ -165,10 +164,10 @@ colour. If the layer 2 screen is behind the ULA screen, the layer 2 screen
 will show through in those pixels of the ULA screen that match the
 transparency colour.
 
-Sidenote: The ULA screen in Sinclair ZX Spectrum Next supports four graphics
-modes; standard Spectrum mode (256 * 192 pixels, 32 * 24 attributes, 16
-colours), Timex high-colour mode (256 * 192 pixels, 32 * 192 attributes, 16
-colours), Timex high-resolution mode (512 * 192 pixels in 2 colours) and
+Sidenote: The ULA screen in Spectrum Next supports four graphics modes;
+standard Spectrum mode (256 * 192 pixels, 32 * 24 attributes, 16 colours),
+Timex high-colour mode (256 * 192 pixels, 32 * 192 attributes, 16 colours),
+Timex high-resolution mode (512 * 192 pixels in 2 colours) and
 low-resolution mode (128 * 96 double-sized pixels in 256 colours).
 
 There are actually two layer 2 screens: the main screen (also called the
@@ -250,9 +249,8 @@ row from the screen to be scrolled in. When scrolling between multiple
 screens, it is convenient to use layer 2 off-screen buffers for the screens
 to be scrolled in.
 
-The [zxnext_layer2_demo](https://github.com/stefanbylund/zxnext_layer2_demo)
-project contains several scrolling examples that make it easier to understand
-how the hardware scrolling of the layer 2 screen is actually done.
+The [demo](demo) folder contains several scrolling examples that make it easier
+to understand how the hardware scrolling of the layer 2 screen is actually done.
 
 ## Known Problems
 

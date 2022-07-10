@@ -4,6 +4,7 @@
  * Implementation of layer2_draw_text() and layer2_set_font() in zxnext_layer2.h.
  ******************************************************************************/
 
+#include <arch/zxn.h>
 #include <z80.h>
 #include <stddef.h>
 
@@ -38,10 +39,10 @@ void layer2_draw_text(uint8_t row,
 
     init_switch_screen(screen);
 
-    // If the Spectrum ROM font is used, make sure ROM bank 1 is switched in.
+    // If the Spectrum ROM font is used, make sure the Spectrum ROM is switched in.
     if (font_address == (uint8_t *) ROM_FONT_ADDRESS)
     {
-        switch_rom_bank(1);
+        IO_7FFD = IO_7FFD_ROM0;
     }
 
     if (y < 64)

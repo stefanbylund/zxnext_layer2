@@ -93,14 +93,3 @@ void switch_ram_bank(uint8_t bank)
     ZXN_WRITE_MMU7(page + 1);
     intrinsic_ei();
 }
-
-void switch_rom_bank(uint8_t bank)
-{
-    uint8_t old_value = z80_bpeek(__SYSVAR_BANKM);
-    uint8_t new_value = (old_value & 0xEF) | ((bank & 0x01) << 4);
-
-    intrinsic_di();
-    z80_bpoke(__SYSVAR_BANKM, new_value);
-    IO_7FFD = new_value;
-    intrinsic_ei();
-}

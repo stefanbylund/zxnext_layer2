@@ -1,16 +1,15 @@
 /*******************************************************************************
  * Stefan Bylund 2017
  *
- * C API for using the layer 2 screen of the Sinclair ZX Spectrum Next as
- * specified at http://www.specnext.com/FIXME/. This C API is a thin wrapper on
- * top of the I/O port interface of the layer 2 screen. In addition, this C API
- * also provides a graphics library of drawing functions.
+ * C API for using the layer 2 screen of the ZX Spectrum Next as specified at
+ * http://www.specnext.com/FIXME/. This C API is a thin wrapper on top of the
+ * I/O port interface of the layer 2 screen. In addition, this C API also
+ * provides a graphics library of drawing functions.
  *
- * The Sinclair ZX Spectrum Next provides a new graphics mode called the layer 2
- * screen. The layer 2 screen is a 256 * 192 pixels screen with 256 colours
- * where each pixel is an 8-bit index between 0 and 255 into a 256-colour
- * palette. The pixels are laid out linearly from left to right and top to
- * bottom.
+ * The Spectrum Next provides a new graphics mode called the layer 2 screen.
+ * The layer 2 screen is a 256 * 192 pixels screen with 256 colours where each
+ * pixel is an 8-bit index between 0 and 255 into a 256-colour palette.
+ * The pixels are laid out linearly from left to right and top to bottom.
  *
  * The layer 2 palette consists of 256 9-bit RGB333 colour values, i.e. the
  * total number of colours is 512. There are actually two layer 2 palettes,
@@ -42,10 +41,10 @@
  * will show through in those pixels of the ULA screen that match the
  * transparency colour.
  *
- * Sidenote: The ULA screen in Sinclair ZX Spectrum Next supports four graphics
- * modes; standard Spectrum mode (256 * 192 pixels, 32 * 24 attributes, 16
- * colours), Timex high-colour mode (256 * 192 pixels, 32 * 192 attributes, 16
- * colours), Timex high-resolution mode (512 * 192 pixels in 2 colours) and
+ * Sidenote: The ULA screen in Spectrum Next supports four graphics modes;
+ * standard Spectrum mode (256 * 192 pixels, 32 * 24 attributes, 16 colours),
+ * Timex high-colour mode (256 * 192 pixels, 32 * 192 attributes, 16 colours),
+ * Timex high-resolution mode (512 * 192 pixels in 2 colours) and
  * low-resolution mode (128 * 96 double-sized pixels in 256 colours).
  *
  * There are actually two layer 2 screens: the main screen (also called the
@@ -128,7 +127,7 @@
  * screens, it is convenient to use layer 2 off-screen buffers for the screens
  * to be scrolled in.
  *
- * The zxnext_layer2_demo project contains several scrolling examples that make
+ * The zxnext_layer2 demo folder contains several scrolling examples that make
  * it easier to understand how the hardware scrolling of the layer 2 screen is
  * actually done.
  ******************************************************************************/

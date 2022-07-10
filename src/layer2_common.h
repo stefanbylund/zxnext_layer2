@@ -25,6 +25,4 @@ void end_switch_screen(layer2_screen_t *screen);
 
 void switch_ram_bank(uint8_t bank);
 
-void switch_rom_bank(uint8_t bank);
-
 #endif
